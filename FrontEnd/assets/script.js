@@ -18,14 +18,12 @@ const query = await fetch(url, {
 
     const galleryContainer = document.querySelector('.gallery');
     
-
     data.forEach(item => {
 
     const galleryGrid = document.createElement('div');
     galleryContainer.appendChild(galleryGrid);
 
     const galleryImg = document.createElement('img');
-
     galleryImg.src = item.imageUrl;
     galleryGrid.appendChild(galleryImg);
     
@@ -38,3 +36,5 @@ const query = await fetch(url, {
  }
 
  recoveryWorks();
+
+
