@@ -125,6 +125,37 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/******* creation partie filtres *******/
+
+.filter {
+	display: flex;
+	padding-top : 21px;
+	padding-bottom : 51px;
+	justify-content: center;
+	gap:10px;
+}
+
+.btnfilter {
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 19px;
+	text-align: center;
+	color: #1D6154;
+	padding:9px;
+	min-width:85px;
+	cursor: pointer;
+}
+
+.btnfilter:hover{
+	background-color: #1D6154;
+	color: white;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
