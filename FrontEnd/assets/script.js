@@ -14,7 +14,20 @@ const query = await fetch(url, {
 
    else{
     let data = await query.json();
-    console.log(data);
+
+    const galleryContainer = document.querySelector('.gallery');
+
+    data.forEach(item => {
+
+    const galleryImg = document.createElement('img');
+
+    galleryImg.src = item.imageUrl;
+    galleryContainer.appendChild(galleryImg);
+    
+    const tilteImg = document.createElement('span');
+    tilteImg.innerHTML = item.title;
+    galleryContainer.appendChild(tilteImg);
+    })
    }
   
  }
