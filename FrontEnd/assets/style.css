@@ -136,7 +136,7 @@ li:hover {
 	gap:10px;
 }
 
-.btnfilter {
+.btnFilter {
 	border: 1px solid #1D6154;
 	border-radius: 60px;
 	font-family: 'Syne';
@@ -151,7 +151,8 @@ li:hover {
 	cursor: pointer;
 }
 
-.btnfilter:hover{
+.btnFilter:hover,
+.btnFilter.btnFilter:hover{
 	background-color: #1D6154;
 	color: white;
 }
