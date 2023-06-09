@@ -218,3 +218,11 @@ footer nav ul {
 	margin: 2em
 }
 
+.work-item {
+	display: none;
+}
+
+.work-item--active {
+	display: flex;
+	flex-direction: column;
+}
