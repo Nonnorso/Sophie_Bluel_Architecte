@@ -220,6 +220,13 @@ input[type="submit"]{
 	text-align: center;
 	border-radius: 60px ;
 }
+footer{
+	position: absolute;
+	left: 0;
+	right: 0;
+	width: 100%;
+	z-index: 9999;
+}
 
 footer nav ul {
 	display: flex;
@@ -230,7 +237,6 @@ footer nav ul {
 	background-color: white;
 	padding-right:107px;
 }
-
 
 /******* JS ******/
 .work-item {
@@ -304,6 +310,10 @@ footer nav ul {
 	height: 50px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	border:none;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 28px;
 }
 
 .frgtlink{
