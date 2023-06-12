@@ -30,33 +30,41 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 /** end reset css**/
 body {
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	;
 }
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
+	
 }
 section {
 	margin: 50px 0
@@ -216,9 +224,15 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 0;
+	padding-top:24px;
+	padding-bottom:24px;
+	background-color: white;
+	padding-right:107px;
 }
 
+
+/******* JS ******/
 .work-item {
 	display: none;
 }
@@ -226,4 +240,78 @@ footer nav ul {
 .work-item--active {
 	display: flex;
 	flex-direction: column;
+}
+
+/******* Log In *******/
+.headerlink {
+	text-decoration: none;
+	color:black;
+}
+
+.selectedPage {
+	font-weight: bold;
+}
+
+.formflex{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.formflex h2{
+	padding-top:100px;
+	padding-bottom:37px;
+	font-size: 36px;
+}
+
+.formflex button{
+	margin-top:7px;
+	margin-bottom:28px;
+	background: #1D6154;
+	border-radius: 60px;
+	border:none;
+	Width :179px;
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 17px;
+	text-align: center;
+	color: #FFFFFF;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	cursor: pointer;
+}
+
+.formstyle{
+	align-items: flex-start;
+	min-width: 379px;
+}
+
+.formstyle label{
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #3D3D3D;
+	padding-bottom: 7px;
+}
+
+.formstyle input{
+	margin-bottom:30px;
+	width: 100%;
+	height: 50px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border:none;
+}
+
+.frgtlink{
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #3D3D3D;
+	margin-bottom:355px;
 }
