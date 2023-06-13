@@ -63,23 +63,28 @@ document.querySelectorAll('button').forEach(button => {
   })
 });
 
+
 //************* création du formulaire de connexion **************//
 const form = document.querySelector('#form');
 
-//verifier la présence de "#form" pou n'appliquer ce code qu'à la page concernée)
+//verifier la présence de "#form" pour n'appliquer ce code qu'à la page concernée
 if (form) {
 const inputEmail = document.querySelector('#e-mail');
 const inputPassword = document.querySelector('#password');
 
 // Événement de soumission du formulaire
 form.addEventListener('submit', (e) => {
+
+// empecher le formulaire d'etre soumis par défaut et evite le rechargement de la page
   e.preventDefault(); 
   
-// Vérification de la combinaison e-mail/mot de passe
+// récuperation des valeurs saisies par l'utilisateur 
   const email = inputEmail.value;
   const password = inputPassword.value;
-    
+
+// Vérification de la combinaison e-mail/mot de passe    
   if (email === 'sophie.bluel@test.tld' && password === 'S0phie') {  
+
 // redirection de l'utilisateur vers la page de connexion et confirmation de connexion
   localStorage.setItem('isLoggedIn', 'true');
   window.location.href = 'index.html';
@@ -90,22 +95,38 @@ form.addEventListener('submit', (e) => {
 });
 }
 
-// Fonction pour vérifier la connexion et mettre à jour la navigation
+//*********** Mettre à jour la navigation login/logout ***************//
 function LoginStatus() {
-  if (localStorage.getItem('isLoggedIn') === 'true') {
-    const loginLink = document.querySelector('#loginLink');
+  
+  const loginLink = document.querySelector('#loginLink');
 
+  if (localStorage.getItem('isLoggedIn') === 'true') {
 //verification de la présence de l'ID LoginLink pour s'assurer d'appliquer la fonction lorsque l'on est connecté    
     if (loginLink) {
       loginLink.textContent = 'logout';
 
-      loginLink.addEventListener('click', () => {
+      loginLink.addEventListener('click', (e) => {
+         e.preventDefault();
+
+//supression de la modification du texte et de l'objet "isLoggedIn" et rechargement de la page
         localStorage.removeItem('isLoggedIn');
         location.reload();
     });
   }
 }
-}
+
+  else{
+    if (loginLink){
+      loginLink.textContent = 'login';
+
+      loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+
+// redirection vers la page de connexion
+  window.location.href = 'logIn.html';
+    });
+  }
+}}
 
 // Événement DOMContentLoaded pour exécuter le code une fois que la page est chargée
 document.addEventListener('DOMContentLoaded', () => {
