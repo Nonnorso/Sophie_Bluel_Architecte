@@ -254,6 +254,10 @@ footer nav ul {
 	color:black;
 }
 
+.headerlink:hover{
+	color: #B1663C;
+}
+
 .selectedPage {
 	font-weight: bold;
 }

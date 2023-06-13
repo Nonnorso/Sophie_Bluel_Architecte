@@ -53,4 +53,4 @@ document.querySelectorAll('button').forEach(button => {
       if(item.getAttribute('data-cat-id') === categoryId || categoryId === '0') item.classList.add('work-item--active')
     })
   })
-})
+});
