@@ -95,10 +95,11 @@ form.addEventListener('submit', (e) => {
 });
 }
 
-//*********** Mettre à jour la navigation login/logout ***************//
+//*********** Mettre à jour la navigation login/logout & barre d'édition***************//
 function LoginStatus() {
   
   const loginLink = document.querySelector('#loginLink');
+  const editContainer = document.querySelector('.editionBar');
 
   if (localStorage.getItem('isLoggedIn') === 'true') {
 //verification de la présence de l'ID LoginLink pour s'assurer d'appliquer la fonction lorsque l'on est connecté    
@@ -113,6 +114,10 @@ function LoginStatus() {
         location.reload();
     });
   }
+
+  if (editContainer) {
+    editContainer.style.display = 'block';
+  }
 }
 
   else{
@@ -126,7 +131,12 @@ function LoginStatus() {
   window.location.href = 'logIn.html';
     });
   }
-}}
+
+  if (editContainer) {
+      editContainer.style.display = 'none';
+  }
+}
+}
 
 // Événement DOMContentLoaded pour exécuter le code une fois que la page est chargée
 document.addEventListener('DOMContentLoaded', () => {

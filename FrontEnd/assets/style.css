@@ -330,3 +330,10 @@ footer nav ul {
 	color: #3D3D3D;
 	margin-bottom:355px;
 }
+
+/**************** Barre d'édition *****************/
+.editionBar{
+	display:none;
+	height: 59px;
+	background-color: black;
+}
