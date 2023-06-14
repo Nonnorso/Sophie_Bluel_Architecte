@@ -116,7 +116,7 @@ function LoginStatus() {
   }
 
   if (editContainer) {
-    editContainer.style.display = 'block';
+    editContainer.classList.add('centerEdition');
   }
 }
 

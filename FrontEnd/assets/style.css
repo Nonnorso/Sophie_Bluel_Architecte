@@ -337,3 +337,30 @@ footer nav ul {
 	height: 59px;
 	background-color: black;
 }
+
+.centerEdition {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap:20px;
+  }
+
+.editionBar .editionLink{
+	display: flex;
+	color:white;
+	gap:10px;
+
+}
+
+.editionBar .editionLink a{
+	text-decoration: none;
+	color:white;
+}
+
+.editionBar .editionBtn{
+	background: #FFFFFF;
+	border-radius: 60px;
+	Width:216px;
+	Height:38px;
+	border: none;
+}
