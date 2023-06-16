@@ -137,14 +137,35 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+}
+
+#portfolio .ProjectBar{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 90px;
+	gap: 30px;
+}
+
+#portfolio .ProjectBarLink a{
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	color:black;
+	text-decoration: none;
+}
+
+#portfolio .ProjectBarLink {
+	display:none;
+	gap:8px;
 }
 
 /******* creation partie filtres *******/
 
 .filter {
 	display: flex;
-	padding-top : 21px;
 	padding-bottom : 51px;
 	justify-content: center;
 	gap:10px;
@@ -380,3 +401,4 @@ footer nav ul {
 	Height:38px;
 	border: none;
 }
+

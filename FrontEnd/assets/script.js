@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const h1Elements = document.querySelectorAll('#header h1');
 
   h1Elements.forEach((element) => {
-    
+
     element.addEventListener('click', () => {
       window.location.href = 'index.html'; // Remplacez 'accueil.html' par le lien de votre page d'accueil
     });
@@ -87,7 +87,9 @@ function LoginStatus() {
   
   const loginLink = document.querySelector('#loginLink');
   const editContainer = document.querySelector('.editionBar');
-  const headerPosition = document.querySelector('#header')
+  const headerPosition = document.querySelector('#header');
+  const filterBox = document.querySelector('.filter')
+  const projectLink = document.querySelector('.ProjectBarLink')
 
   if (token && userId) {
 //verification de la présence de l'ID LoginLink pour s'assurer d'appliquer la fonction lorsque l'on est connecté    
@@ -109,10 +111,19 @@ function LoginStatus() {
   if (editContainer) {
     editContainer.classList.add('centerEdition');
   }
- //ajout de la marge à mon header
- if (header) {
-  header.classList.add('headerPadding');
+//ajout de la marge à mon header
+  if (headerPosition) {
+    headerPosition.classList.add('headerPadding');
 }
+//suppression des filtres
+  if (filterBox){
+    filterBox.style.display = "none";
+}
+
+//ajout du lien modifier à la section Projets
+  if(projectLink){
+    projectLink.style.display = "flex";
+  }
 }
 
 //revenir à l'etat déconnecté et afficher de nouveau l'option de connexion
