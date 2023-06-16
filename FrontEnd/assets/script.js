@@ -1,5 +1,14 @@
-import { createFilters } from './factory/createFilters.js'
-import { createWorks } from './factory/createWorks.js'
+// import { createFilters } from './factory/createFilters.js'
+// import { createWorks } from './factory/createWorks.js'
+
+const token = sessionStorage.getItem("token") ? sessionStorage.getItem("token") : null
+const userId = sessionStorage.getItem("userId") ? sessionStorage.getItem("userId") : null
+
+if(userId !== null && token !== null) {
+
+  LoginStatus();
+
+}
 
 // Récuperation des travaux de l'API
 await fetch('http://localhost:5678/api/works')
@@ -17,9 +26,6 @@ await fetch('http://localhost:5678/api/works')
     ))
 
   });
-// Je dois appeller ma fonction apres le chargement des travaux
-  LoginStatus();
-
 })
 
 .catch(error => console.log(error))
@@ -44,11 +50,8 @@ await fetch('http://localhost:5678/api/categories')
     ))
 
   });
-
-//Je dois appeller ma fonction apres le chargement des travaux 
-  LoginStatus();
-  
 })
+
 .catch(error => console.log(error))
 
 // Gestion des filtres
@@ -63,56 +66,27 @@ document.querySelectorAll('button').forEach(button => {
   })
 });
 
-
-//************* création du formulaire de connexion **************//
-const form = document.querySelector('#form');
-
-//verifier la présence de "#form" pour n'appliquer ce code qu'à la page concernée
-if (form) {
-const inputEmail = document.querySelector('#e-mail');
-const inputPassword = document.querySelector('#password');
-
-// Événement de soumission du formulaire
-form.addEventListener('submit', (e) => {
-
-// empecher le formulaire d'etre soumis par défaut et evite le rechargement de la page
-  e.preventDefault(); 
-  
-// récuperation des valeurs saisies par l'utilisateur 
-  const email = inputEmail.value;
-  const password = inputPassword.value;
-
-// Vérification de la combinaison e-mail/mot de passe    
-  if (email === 'sophie.bluel@test.tld' && password === 'S0phie') {  
-
-// redirection de l'utilisateur vers la page de connexion et confirmation de connexion
-  localStorage.setItem('isLoggedIn', 'true');
-  window.location.href = 'index.html';
-
-  } else {
-    alert('Erreur dans l’identifiant ou le mot de passe');
-  }
-});
-}
-
 //*********** Mettre à jour la navigation login/logout & barre d'édition***************//
 function LoginStatus() {
   
   const loginLink = document.querySelector('#loginLink');
   const editContainer = document.querySelector('.editionBar');
 
-  if (localStorage.getItem('isLoggedIn') === 'true') {
+  if (token && userId) {
 //verification de la présence de l'ID LoginLink pour s'assurer d'appliquer la fonction lorsque l'on est connecté    
     if (loginLink) {
       loginLink.textContent = 'logout';
 
-      loginLink.addEventListener('click', (e) => {
-         e.preventDefault();
-
+      loginLink.addEventListener('click', (event) => {
+         event.preventDefault();
 //supression de la modification du texte et de l'objet "isLoggedIn" et rechargement de la page
-        localStorage.removeItem('isLoggedIn');
-        location.reload();
+         sessionStorage.clear();
+         location.reload();
     });
+  }
+//Ajout de la classe à ma barre d'edition pour l'afficher
+  if (editContainer) {
+    editContainer.style.display = 'flex';
   }
 
   if (editContainer) {
@@ -120,21 +94,26 @@ function LoginStatus() {
   }
 }
 
+//revenir à l'etat déconnecté et afficher de nouveau l'option de connexion
   else{
     if (loginLink){
       loginLink.textContent = 'login';
 
-      loginLink.addEventListener('click', (e) => {
-        e.preventDefault();
+      loginLink.addEventListener('click', (event) => {
+        event.preventDefault();
 
 // redirection vers la page de connexion
   window.location.href = 'logIn.html';
     });
   }
 
-  if (editContainer) {
-      editContainer.style.display = 'none';
-  }
+//masquer la barre d'edition lorsque l'on est déconecté
+if (editContainer) {
+  editContainer.style.display = 'none';
+}
+
+if (editContainer) {
+  editContainer.classList.remove('centerEdition');
 }
 }
 
@@ -147,13 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // Mettre à jour le contenu de l'élément "#loginLink" lors du chargement de la page
 const loginLink = document.querySelector('#loginLink');
 
-if (loginLink && localStorage.getItem('isLoggedIn') === 'true') {
+if (loginLink && token && userId) {
   loginLink.textContent = 'logout';
 
-  loginLink.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    localStorage.removeItem('isLoggedIn');
+  loginLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    sessionStorage.clear();
     location.reload();
 });
-}});
+}})};

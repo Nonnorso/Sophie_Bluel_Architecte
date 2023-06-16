@@ -64,6 +64,7 @@ header {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0;
+	padding-top: 50px;
 	
 }
 section {
@@ -331,6 +332,12 @@ footer nav ul {
 	margin-bottom:355px;
 }
 
+.errorMsg{
+	color:red;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
 /**************** Barre d'édition *****************/
 .editionBar{
 	display:none;
@@ -343,6 +350,10 @@ footer nav ul {
 	justify-content: center;
 	align-items: center;
 	gap:20px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
   }
 
 .editionBar .editionLink{
