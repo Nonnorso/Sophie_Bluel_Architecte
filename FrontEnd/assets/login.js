@@ -1,3 +1,16 @@
+//Ajout d'une fonction de redirection au clic sur l'element titre du site
+document.addEventListener('DOMContentLoaded', () => {
+
+    const h1Elements = document.querySelectorAll('#header h1');
+
+    h1Elements.forEach((element) => {
+        
+      element.addEventListener('click', () => {
+        window.location.href = 'index.html'; // Remplacez 'accueil.html' par le lien de votre page d'accueil
+      });
+    });
+  });
+
 //************* création du formulaire de connexion **************//
 document.querySelector('#form').addEventListener("submit", (event) => {
     event.preventDefault();

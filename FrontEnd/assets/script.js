@@ -1,9 +1,25 @@
+//Ajout d'une fonction de redirection au clic sur l'element titre du site
+document.addEventListener('DOMContentLoaded', () => {
+
+  const h1Elements = document.querySelectorAll('#header h1');
+
+  h1Elements.forEach((element) => {
+    
+    element.addEventListener('click', () => {
+      window.location.href = 'index.html'; // Remplacez 'accueil.html' par le lien de votre page d'accueil
+    });
+  });
+});
+
+// import des travaux de récupération des fetch
 import { createFilters } from './factory/createFilters.js'
 import { createWorks } from './factory/createWorks.js'
 
+//création des constantes pour récuperer les données stockées dans le sessionStorage
 const token = sessionStorage.getItem("token") ? sessionStorage.getItem("token") : null
 const userId = sessionStorage.getItem("userId") ? sessionStorage.getItem("userId") : null
 
+//condition de déclenchement de la fonction LoginStatus
 if(userId !== null && token !== null) {
 
   LoginStatus();
