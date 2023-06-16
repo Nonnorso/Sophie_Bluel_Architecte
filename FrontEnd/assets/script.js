@@ -1,5 +1,5 @@
-// import { createFilters } from './factory/createFilters.js'
-// import { createWorks } from './factory/createWorks.js'
+import { createFilters } from './factory/createFilters.js'
+import { createWorks } from './factory/createWorks.js'
 
 const token = sessionStorage.getItem("token") ? sessionStorage.getItem("token") : null
 const userId = sessionStorage.getItem("userId") ? sessionStorage.getItem("userId") : null
@@ -71,6 +71,7 @@ function LoginStatus() {
   
   const loginLink = document.querySelector('#loginLink');
   const editContainer = document.querySelector('.editionBar');
+  const headerPosition = document.querySelector('#header')
 
   if (token && userId) {
 //verification de la présence de l'ID LoginLink pour s'assurer d'appliquer la fonction lorsque l'on est connecté    
@@ -92,6 +93,10 @@ function LoginStatus() {
   if (editContainer) {
     editContainer.classList.add('centerEdition');
   }
+ //ajout de la marge à mon header
+ if (header) {
+  header.classList.add('headerPadding');
+}
 }
 
 //revenir à l'etat déconnecté et afficher de nouveau l'option de connexion
@@ -114,6 +119,10 @@ if (editContainer) {
 
 if (editContainer) {
   editContainer.classList.remove('centerEdition');
+}
+
+if (header) {
+  header.classList.remove('headerPadding');
 }
 }
 
