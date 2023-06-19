@@ -22,7 +22,7 @@
 
 		<span class="editionLink">
 			<i class="fa-solid fa-pen-to-square"></i>
-			<a href="#">Mode édition</a>
+			<a href="#modal" class="jsModal">Mode édition</a>
 		</span>
 
 		<button class="editionBtn">publier les changements</button>
@@ -87,8 +87,26 @@
 
 			<span class="ProjectBarLink">
 				<i class="fa-solid fa-pen-to-square"></i>
-				<a href="#">modifier</a>
+				<a href="#modal" class="jsModal">modifier</a>
 			</span>
+
+			<aside id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display:none;">
+
+				<div class="modal-wrapper">
+
+					<span class="closeModal" >
+						<i  class="fa-solid fa-xmark jsCloseModal"></i>
+					</span>
+
+					<h1 class="modalTitle" id="titleModal">Galerie photo</h1>
+
+					<div class="modalGallery" id="modalGallery">
+						
+					</div>
+
+				</div>
+
+			</aside>
 
 		</div>
 

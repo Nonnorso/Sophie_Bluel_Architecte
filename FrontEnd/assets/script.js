@@ -171,3 +171,51 @@ if (loginLink && token && userId) {
     location.reload();
 });
 }})};
+
+//*******ajoute de la fonctionnalité pour ouvrir/fermer ma modale ********//
+let modal = null
+
+const openModal = function (event) {
+  event.preventDefault()
+
+  const target = document.querySelector(event.target.getAttribute('href'))
+
+//affichage de la boite modale
+  target.style.display = null;
+  target.removeAttribute('aria-hidden')
+  target.setAttribute('aria-modal', 'true')
+  modal = target
+
+//fermeture de la boite modale
+//en clickant en dehors de la modale
+  modal.addEventListener('click', closeModal)
+
+//en clickant sur la croix
+  modal.querySelector('.jsCloseModal').addEventListener('click', closeModal)
+  modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
+}
+
+const closeModal = function (event) {
+  if (modal === null) return
+  event.preventDefault()
+
+//masquer la boite modale
+  modal.style.display = "none"
+  modal.setAttribute('aria-hidden', 'true')
+  modal.removeAttribute('aria-modal')
+  modal.removeEventListener('click', closeModal)
+  modal.querySelector('.jsCloseModal').removeEventListener('click', closeModal)
+  modal.querySelector('.modal-wrapper').removeEventListener('click', stopPropagation)
+  modal = null
+}
+
+//empecher la fermeture de modale au clik dans la boite modale
+const stopPropagation = function (event){
+  event.stopPropagation()
+}
+
+//ouverture de la boite modale sur le click des liens
+document.querySelectorAll('.jsModal').forEach(a =>{
+
+  a.addEventListener('click', openModal)
+})
