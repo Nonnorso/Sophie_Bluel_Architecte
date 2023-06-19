@@ -222,6 +222,11 @@ const stopPropagation = function (event){
 
 //ouverture de la boite modale sur le click des liens
 document.querySelectorAll('.jsModal').forEach(a =>{
-
   a.addEventListener('click', openModal)
+})
+
+window.addEventListener('keydown', function (event) {
+  if(event.key === "Escape" || event.key === "Esc"){
+    closeModal(event)
+  }
 })

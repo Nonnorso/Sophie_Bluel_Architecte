@@ -417,12 +417,14 @@ footer nav ul {
 }
 
 .modal-wrapper{
-	overflow:auto;
+	overflow: auto;
 	background: white;
-	width:630px;
-	max-width: calc(100vw - 20px);
-	max-height:calc(100vh - 20px);
+	width: 630px;
 	border-radius: 10px;
+	height: 731px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .closeModal{
@@ -454,6 +456,9 @@ footer nav ul {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-gap: 10px;
+	padding-left: 105px;
+	padding-right: 105px;
+	padding-bottom: 47px;
 }
 
 .modalGallery .modalImg {
@@ -461,12 +466,12 @@ footer nav ul {
 	height: auto;
   }
 
-  .image-container {
+.image-container {
 	position: relative;
 	display: inline-block;
   }
   
-  .image-container i {
+.image-container i {
 	position: absolute;
 	top: 5px;
 	right: 5px;
@@ -477,7 +482,7 @@ footer nav ul {
 	z-index: 1;
   }
 
-  .image-container .editText{
+.image-container .editText{
 	font-family: 'Work Sans';
 	font-style: normal;
 	font-weight: 400;
@@ -486,3 +491,40 @@ footer nav ul {
 	text-align: center;
 	color: #000000;
   }
+
+.modalBar{
+	border: 1px solid #B3B3B3;
+	margin-right: 105px;
+	margin-left: 105px;
+	margin-bottom: 38px;
+}
+
+.modalBtn{
+	background: #1D6154;
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 17px;
+	text-align: center;
+	color: #FFFFFF;
+	padding:10px 49px;
+	margin-left:195px;
+	margin-right:195px;
+	margin-bottom:23px;
+}
+
+.deleteWorkModal{
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+	text-align: center;
+	color: #D65353;
+	margin-left:200px;
+	margin-right:200px;
+	margin-bottom:48px;
+	text-decoration: none;
+}
