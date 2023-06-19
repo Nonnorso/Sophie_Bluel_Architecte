@@ -15,13 +15,23 @@ function createWorks (categoryId, imageUrl, title) {
     galleryGrid.append(titleImg);
 
 //*********affichage des travaux de l'api egalement dans la modale *********/
-//demande d'affichage des travaux dans la grid de la modale
-    const modalGallery = document.getElementById('modalGallery');
-//clonage des images à afficher
+
+  // Ajout de l'icône de suppression uniquement aux images de la modalGallery
+  const modalGallery = document.getElementById('modalGallery');
+  if (modalGallery) {
     const modalImg = galleryImg.cloneNode(true);
-// Ajout de la classe personnalisée pour pouvoir modifier l'apparence de mes images
-    modalImg.classList.add('modalImg'); 
-    modalGallery.append(modalImg);
+    modalImg.classList.add('modalImg');
+    const imageContainer = document.createElement('div');
+    imageContainer.classList.add('image-container');
+    imageContainer.appendChild(modalImg);
+
+    // Création de l'icône de suppression
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fa-solid', 'fa-trash-can');
+    imageContainer.appendChild(deleteIcon);
+
+    modalGallery.appendChild(imageContainer);
+  }
 
     return galleryGrid
 

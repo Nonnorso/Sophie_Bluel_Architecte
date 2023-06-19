@@ -193,7 +193,13 @@ const openModal = function (event) {
 //en clickant sur la croix
   modal.querySelector('.jsCloseModal').addEventListener('click', closeModal)
   modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
-}
+
+  // Ajout d'une classe aux images de la modalGallery
+  const modalGalleryImages = modal.querySelectorAll('.modalGallery .modalImg');
+  modalGalleryImages.forEach((image) => {
+    image.classList.add('modalGalleryImage');
+  });
+};
 
 const closeModal = function (event) {
   if (modal === null) return
