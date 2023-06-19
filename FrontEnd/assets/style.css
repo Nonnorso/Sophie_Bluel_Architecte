@@ -447,6 +447,7 @@ footer nav ul {
 	text-align: center;
 	color: #000000;
 	padding-bottom:46px;
+	cursor:default;
 }
 
 .modalGallery{
@@ -456,8 +457,32 @@ footer nav ul {
 }
 
 .modalGallery .modalImg {
-	max-width: 78px;
-	max-height: 104px;
 	width: 100%;
 	height: auto;
+  }
+
+  .image-container {
+	position: relative;
+	display: inline-block;
+  }
+  
+  .image-container i {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: #000000;
+	border-radius: 2px;
+	padding: 4px;
+	color: white;
+	z-index: 1;
+  }
+
+  .image-container .editText{
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 14px;
+	text-align: center;
+	color: #000000;
   }

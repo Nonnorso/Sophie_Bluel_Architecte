@@ -21,16 +21,23 @@ function createWorks (categoryId, imageUrl, title) {
   if (modalGallery) {
     const modalImg = galleryImg.cloneNode(true);
     modalImg.classList.add('modalImg');
+
     const imageContainer = document.createElement('div');
     imageContainer.classList.add('image-container');
-    imageContainer.appendChild(modalImg);
+    imageContainer.append(modalImg);
 
-    // Création de l'icône de suppression
+// Création de l'icône de suppression
     const deleteIcon = document.createElement('i');
     deleteIcon.classList.add('fa-solid', 'fa-trash-can');
-    imageContainer.appendChild(deleteIcon);
+    imageContainer.append(deleteIcon);
 
-    modalGallery.appendChild(imageContainer);
+// Ajout du texte "éditer"
+    const editText = document.createElement('a');
+    editText.innerHTML = "éditer";
+    editText.classList.add('editTextStyle');
+    imageContainer.append(editText);
+
+    modalGallery.append(imageContainer);
   }
 
     return galleryGrid
