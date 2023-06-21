@@ -38,7 +38,8 @@ await fetch('http://localhost:5678/api/works')
       createWorks(
         item.category.id,
         item.imageUrl,
-        item.title
+        item.title,
+        item.id
     ))
 
   });
@@ -194,13 +195,22 @@ const openModal = function (event) {
   modal.querySelector('.jsCloseModal').addEventListener('click', closeModal)
   modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
 
-  // Ajout d'une classe aux images de la modalGallery
+//ajout d'un gestionnaire d'evenement pour les corbeilles
+  const deleteIcons = modal.querySelectorAll('.fa-trash-can');
+  deleteIcons.forEach((icon) => {
+    icon.addEventListener('click', deleteImage);
+  })
+
+// Ajout d'une classe aux images de la modalGallery
   const modalGalleryImages = modal.querySelectorAll('.modalGallery .modalImg');
   modalGalleryImages.forEach((image) => {
     image.classList.add('modalGalleryImage');
   });
 };
 
+//ajout d ela fonction de suppréssion des travaux
+
+//Parametrage de la fermeture de la modale
 const closeModal = function (event) {
   if (modal === null) return
   event.preventDefault()
@@ -225,6 +235,7 @@ document.querySelectorAll('.jsModal').forEach(a =>{
   a.addEventListener('click', openModal)
 })
 
+//option de fermeture de la modale en appuyant sur "esc" ou "echap" selon le modele
 window.addEventListener('keydown', function (event) {
   if(event.key === "Escape" || event.key === "Esc"){
     closeModal(event)
