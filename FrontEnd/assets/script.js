@@ -168,16 +168,26 @@ if (loginLink && token && userId) {
 
   loginLink.addEventListener('click', (event) => {
     event.preventDefault();
-    sessionStorage.clear();
-    location.reload();
+
+    if(token && userId){
+      sessionStorage.clear();
+      location.reload();
+    }
+
+    else{
+      window.location.href = 'logIn.html';
+    }   
 });
 }})};
 
 //*******ajoute de la fonctionnalité pour ouvrir/fermer ma modale ********//
 let modal = null
 
+
+//***************** ouvrir la modale ************/
 const openModal = function (event) {
   event.preventDefault()
+  event.stopPropagation();
 
   const target = document.querySelector(event.target.getAttribute('href'))
 
@@ -198,7 +208,10 @@ const openModal = function (event) {
 //ajout d'un gestionnaire d'evenement pour les corbeilles
   const deleteIcons = modal.querySelectorAll('.fa-trash-can');
   deleteIcons.forEach((icon) => {
-    icon.addEventListener('click', deleteImage);
+    icon.addEventListener('click', function(event) {
+      event.preventDefault();
+      deleteImage(event)
+    });
   })
 
 // Ajout d'une classe aux images de la modalGallery
@@ -208,12 +221,80 @@ const openModal = function (event) {
   });
 };
 
-//ajout d ela fonction de suppréssion des travaux
+//****************** suppression des travaux à l'interieur de la modale ***************/
+//ajout de la fonction de suppréssion des travaux
+const deleteImage = function (event) {
+  event.preventDefault();
 
+  const itemId = event.currentTarget.getAttribute('data-item-id');
+
+  // Afficher une boîte de dialogue de confirmation
+ if (confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
+  fetch(`http://localhost:5678/api/works/${itemId}`, {
+      method: 'DELETE',
+      headers: {
+        'accept': '*/*',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    }})
+
+    .then (response => {
+      console.log(response);
+      
+      //confirmation de suppression
+      alert('Suppression réussie !');
+    })
+
+    .catch(error => console.log(error));
+ }
+
+
+  // if (confirm) {
+  // //   try{
+
+  // //     // Requête API pour supprimer l'image
+  // //   const response = fetch(`http://localhost:5678/api/works/${itemId}`, {
+  // //     method: 'DELETE',
+  // //     headers: {
+  // //       Authorization: `Bearer ${token}`
+  // //   }
+  // // });
+
+  //   if (response.ok) {
+  //     // Suppression réussie
+  //     // const imageContainer = event.currentTarget.closest('.image-container');
+  //     // imageContainer.remove();
+
+  //     //confirmation de suppression
+  //     alert('Suppression réussie !');
+  //     }
+ 
+  //     else {
+  //     // Gestion des erreurs lors de la suppression
+  //     alert("Une erreur s'est produite lors de la suppression de l'image.");
+  //     }
+  //     }
+
+  //     catch (error) {
+  //       // Gestion des erreurs de réseau ou autres erreurs
+  //       alert("Une erreur s'est produite lors de la suppression de l'image:", error);
+  //     }
+  // }
+};
+
+//****************** fermeture de la modale ****************************/
 //Parametrage de la fermeture de la modale
 const closeModal = function (event) {
-  if (modal === null) return
-  event.preventDefault()
+  if (modal === null) return;
+  event.preventDefault();
+
+//verification si une suppréssion a été effectuée
+const isImageDeleted = event.target.classList.contains('fa-trash-can');
+if (isImageDeleted) {
+
+// Ne pas fermer la modale si la suppression a été effectuée
+  return;
+}
 
 //masquer la boite modale
   modal.style.display = "none"
