@@ -248,39 +248,10 @@ const deleteImage = function (event) {
     .catch(error => console.log(error));
  }
 
-
-  // if (confirm) {
-  // //   try{
-
-  // //     // Requête API pour supprimer l'image
-  // //   const response = fetch(`http://localhost:5678/api/works/${itemId}`, {
-  // //     method: 'DELETE',
-  // //     headers: {
-  // //       Authorization: `Bearer ${token}`
-  // //   }
-  // // });
-
-  //   if (response.ok) {
-  //     // Suppression réussie
-  //     // const imageContainer = event.currentTarget.closest('.image-container');
-  //     // imageContainer.remove();
-
-  //     //confirmation de suppression
-  //     alert('Suppression réussie !');
-  //     }
- 
-  //     else {
-  //     // Gestion des erreurs lors de la suppression
-  //     alert("Une erreur s'est produite lors de la suppression de l'image.");
-  //     }
-  //     }
-
-  //     catch (error) {
-  //       // Gestion des erreurs de réseau ou autres erreurs
-  //       alert("Une erreur s'est produite lors de la suppression de l'image:", error);
-  //     }
-  // }
-};
+      else {
+      // Gestion des erreurs lors de la suppression
+      alert("Une erreur s'est produite lors de la suppression de l'image.");
+      }};
 
 //****************** fermeture de la modale ****************************/
 //Parametrage de la fermeture de la modale
