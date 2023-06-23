@@ -243,6 +243,18 @@ const deleteImage = function (event) {
       
       //confirmation de suppression
       alert('Suppression réussie !');
+      
+      //gerer l'affichage dynamique des galeries suite à la suppression
+      const galleryItem = document.querySelector(`.gallery [data-item-id="${itemId}"]`);
+        
+      if (galleryItem) {
+          galleryItem.remove();
+        }
+
+        const modalItem = document.querySelector(`#modalGallery [data-item-id="${itemId}"]`);
+        if (modalItem) {
+          modalItem.closest('.image-container').remove();
+        }
     })
 
     .catch(error => console.log(error));

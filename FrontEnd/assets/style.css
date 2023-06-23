@@ -480,6 +480,7 @@ footer nav ul {
 	padding: 4px;
 	color: white;
 	z-index: 1;
+	cursor: pointer;
   }
 
 .image-container .editText{

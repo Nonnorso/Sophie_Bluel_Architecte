@@ -42,7 +42,7 @@ function createWorks (categoryId, imageUrl, title, itemId) {
     imageContainer.append(deleteIcon);
 
 // Ajout du texte "éditer"
-    const editText = document.createElement('a');
+    const editText = document.createElement('span');
     editText.innerHTML = "éditer";
     editText.classList.add('editTextStyle');
     imageContainer.append(editText);
