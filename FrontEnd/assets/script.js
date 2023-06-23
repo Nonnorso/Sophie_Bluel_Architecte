@@ -271,42 +271,56 @@ const deleteImage = function (event) {
       }};
 
 //fonction pour tout supprimer d'un coup
-  const deleteGallery = function (event) {
-    event.preventDefault();
-  
-    // confirmation
-    if (confirm("Êtes-vous sûr de vouloir supprimer toute la galerie ?")) {
-      // Effectuer une requête pour supprimer tous les éléments de la galerie
-      fetch('http://localhost:5678/api/works/all', {
+const deleteGallery = function (event) {
+  event.preventDefault();
+
+  // Confirmation
+  if (confirm("Êtes-vous sûr de vouloir supprimer toute la galerie ?")) {
+
+  // Boucle pour envoyer des requêtes de suppression pour chaque travail
+    document.querySelectorAll('.gallery .work-item').forEach(item => {
+    const itemId = item.getAttribute('data-item-id');
+
+      fetch(`http://localhost:5678/api/works/${itemId}`, {
         method: 'DELETE',
         headers: {
-          'accept': '*/*',
+          'accept': '/',
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       })
+
         .then(response => {
           console.log(response);
-  
-          // Confirmation de la suppression de la galerie
-          alert('Suppression de la galerie réussie !');
-  
-          // Supprimer tous les éléments de la galerie de l'affichage
-          const galleryItems = document.querySelectorAll('.gallery [data-item-id]');
-          galleryItems.forEach(item => item.remove());
-  
-          const modalItems = document.querySelectorAll('#modalGallery [data-item-id]');
-          modalItems.forEach(item => item.closest('.image-container').remove());
+
+          // Confirmation de la suppression de l'élément de la galerie
+          console.log(`Suppression de l'élément ${itemId} réussie !`);
+          
+          // Gérer l'affichage dynamique des galeries suite à la suppression
+          const galleryItem = document.querySelector(`.gallery [data-item-id="${itemId}"]`);
+
+          if (galleryItem) {
+            galleryItem.remove();
+          }
+
+          const modalItem = document.querySelector(`#modalGallery [data-item-id="${itemId}"]`);
+          if (modalItem) {
+            modalItem.closest('.image-container').remove();
+          }
         })
 
         .catch(error => console.log(error));
-    } 
+    })
 
-    else {
-      // Gestion des erreurs lors de la suppression de la galerie
-      alert("Une erreur s'est produite lors de la suppression de la galerie.");
-    }
-  };
+    // Confirmation de la suppression de la galerie
+    alert('Suppression de la galerie réussie !');
+  } 
+  
+  else {
+    // Gestion des erreurs lors de la suppression de la galerie
+    alert("Une erreur s'est produite lors de la suppression de la galerie.");
+  }
+};
 
 //ajout d'evenement pour supprimer toute la galerie
   const deleteAll = document.querySelector('.deleteWorkModal');
