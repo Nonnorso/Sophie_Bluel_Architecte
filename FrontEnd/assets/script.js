@@ -83,7 +83,7 @@ document.querySelectorAll('button').forEach(button => {
   })
 });
 
-//*********** Mettre à jour la navigation login/logout & barre d'édition***************//
+//**************************************** Mettre à jour la navigation login/logout & barre d'édition****************************//
 function LoginStatus() {
   
   const loginLink = document.querySelector('#loginLink');
@@ -180,11 +180,11 @@ if (loginLink && token && userId) {
 });
 }})};
 
-//*******ajoute de la fonctionnalité pour ouvrir/fermer ma modale ********//
+//*********************************ajoute de la fonctionnalité pour ouvrir/fermer ma modale ************************************//
 let modal = null
 
 
-//***************** ouvrir la modale ************/
+//********************************************************* ouvrir la modale ********************************************/
 const openModal = function (event) {
   event.preventDefault()
   event.stopPropagation();
@@ -205,8 +205,9 @@ const openModal = function (event) {
   modal.querySelector('.jsCloseModal').addEventListener('click', closeModal)
   modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
 
-//ajout d'un gestionnaire d'evenement pour les corbeilles
+//ajout de l'evenement de suppression sur les corbeilles
   const deleteIcons = modal.querySelectorAll('.fa-trash-can');
+
   deleteIcons.forEach((icon) => {
     icon.addEventListener('click', function(event) {
       event.preventDefault();
@@ -219,9 +220,13 @@ const openModal = function (event) {
   modalGalleryImages.forEach((image) => {
     image.classList.add('modalGalleryImage');
   });
+
+  // Ajout de l'événement de clic sur le bouton modalBtn
+  const modalBtn = target.querySelector('.modalBtn');
+  modalBtn.addEventListener('click', modalBtn);
 };
 
-//****************** suppression des travaux à l'interieur de la modale ***************/
+//*************************************************** suppression des travaux à l'interieur de la modale ************************/
 //ajout de la fonction de suppréssion des travaux
 const deleteImage = function (event) {
   event.preventDefault();
@@ -265,7 +270,49 @@ const deleteImage = function (event) {
       alert("Une erreur s'est produite lors de la suppression de l'image.");
       }};
 
-//****************** fermeture de la modale ****************************/
+//fonction pour tout supprimer d'un coup
+  const deleteGallery = function (event) {
+    event.preventDefault();
+  
+    // confirmation
+    if (confirm("Êtes-vous sûr de vouloir supprimer toute la galerie ?")) {
+      // Effectuer une requête pour supprimer tous les éléments de la galerie
+      fetch('http://localhost:5678/api/works/all', {
+        method: 'DELETE',
+        headers: {
+          'accept': '*/*',
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          console.log(response);
+  
+          // Confirmation de la suppression de la galerie
+          alert('Suppression de la galerie réussie !');
+  
+          // Supprimer tous les éléments de la galerie de l'affichage
+          const galleryItems = document.querySelectorAll('.gallery [data-item-id]');
+          galleryItems.forEach(item => item.remove());
+  
+          const modalItems = document.querySelectorAll('#modalGallery [data-item-id]');
+          modalItems.forEach(item => item.closest('.image-container').remove());
+        })
+
+        .catch(error => console.log(error));
+    } 
+
+    else {
+      // Gestion des erreurs lors de la suppression de la galerie
+      alert("Une erreur s'est produite lors de la suppression de la galerie.");
+    }
+  };
+
+//ajout d'evenement pour supprimer toute la galerie
+  const deleteAll = document.querySelector('.deleteWorkModal');
+  deleteAll.addEventListener('click', deleteGallery);
+
+//************************************************************** fermeture de la modale *********************************************************/
 //Parametrage de la fermeture de la modale
 const closeModal = function (event) {
   if (modal === null) return;
@@ -305,3 +352,5 @@ window.addEventListener('keydown', function (event) {
     closeModal(event)
   }
 })
+
+//*********************************Ajout d'un image ***********************************************//

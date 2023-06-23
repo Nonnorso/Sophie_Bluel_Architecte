@@ -421,7 +421,7 @@ footer nav ul {
 	background: white;
 	width: 630px;
 	border-radius: 10px;
-	height: 731px;
+	height: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -528,4 +528,5 @@ footer nav ul {
 	margin-right:200px;
 	margin-bottom:48px;
 	text-decoration: none;
+	cursor:pointer;
 }
