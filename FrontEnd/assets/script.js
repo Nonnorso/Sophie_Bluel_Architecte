@@ -277,7 +277,7 @@ const deleteGallery = function (event) {
   // Confirmation
   if (confirm("Êtes-vous sûr de vouloir supprimer toute la galerie ?")) {
 
-  // Boucle pour envoyer des requêtes de suppression pour chaque travail
+  // selection de tous les items à supprimer et creation d'une boucle pour tous les selectionner quelque soit le nombre de travaux recupérés
     document.querySelectorAll('.gallery .work-item').forEach(item => {
     const itemId = item.getAttribute('data-item-id');
 
