@@ -417,6 +417,14 @@ initialModal();
    // Vider la galerie dans la modal
    modalGallery.innerHTML = '';
 
+   //creation du formulaire
+
+   //modification (ou suppression ?) du boutton ajout photo
+
+   //masquer la span "supprimer la gallerie"
+   const deleteAll = document.querySelector('.deleteWorkModal');
+   deleteAll.style.display = 'none';
+
   // Stocker les images de la galerie d'origine
   const originalGalleryItems = modalGallery.querySelectorAll('.image-container');
 
