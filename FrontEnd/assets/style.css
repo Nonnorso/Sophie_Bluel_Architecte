@@ -429,7 +429,7 @@ footer nav ul {
 
 .closeModal{
 	display: flex;
-	justify-content:left;
+	justify-content:space-between;
 	padding-top:10px;
 	padding-left:30px;
 	padding-bottom:26px;
@@ -438,6 +438,13 @@ footer nav ul {
 
 .closeModal i{
 	cursor: pointer;
+}
+
+.closeModal .arrowLeftPosition{
+	display:none;
+	width: 21px;
+	height: 21px; 
+	padding-right:30px;
 }
 
 .modalTitle{
@@ -514,6 +521,7 @@ footer nav ul {
 	margin-left:195px;
 	margin-right:195px;
 	margin-bottom:23px;
+	cursor: pointer;
 }
 
 .deleteWorkModal{

@@ -181,67 +181,97 @@ if (loginLink && token && userId) {
 }})};
 
 //*********************************ajoute de la fonctionnalité pour ouvrir/fermer ma modale ************************************//
-let modal = null
-
+let modal;
+let resetModal = null;
 
 //********************************************************* ouvrir la modale ********************************************/
 const openModal = function (event) {
   event.preventDefault()
   event.stopPropagation();
 
-  const target = document.querySelector(event.target.getAttribute('href'))
+  modal = document.querySelector(event.target.getAttribute('href'))
 
 //affichage de la boite modale
-  target.style.display = null;
-  target.removeAttribute('aria-hidden')
-  target.setAttribute('aria-modal', 'true')
-  modal = target
+  modal.style.display = 'none';
+  modal.removeAttribute('aria-hidden')
+  modal.setAttribute('aria-modal', 'true')
+  resetModal = modal.cloneNode(true); 
 
-//fermeture de la boite modale
-//en clickant en dehors de la modale
-  modal.addEventListener('click', closeModal)
+  initialModal();
+};
 
-//en clickant sur la croix
-  modal.querySelector('.jsCloseModal').addEventListener('click', closeModal)
-  modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
+function initialModal() {
 
-//ajout de l'evenement de suppression sur les corbeilles
+  if(!modal){
+    console.error("L'élément modal n'a pas été trouvé.");
+    return;
+  }
+
+  // Affichage de la boîte modale
+  modal.style.display = 'flex';
+  modal.removeAttribute('aria-hidden');
+  modal.setAttribute('aria-modal', 'true');
+
+  // Fermeture de la boîte modale en cliquant en dehors
+  modal.addEventListener('click', closeModal);
+
+  // Fermeture de la boîte modale en cliquant sur la croix
+  const closeButton = modal.querySelector('.jsCloseModal');
+  if (closeButton) {
+    closeButton.addEventListener('click', closeModal);
+  }
+
+  const modalWrapper = modal.querySelector('.modal-wrapper');
+  if (modalWrapper) {
+    modalWrapper.addEventListener('click', stopPropagation);
+  }
+
+  // Ajout de l'événement de suppression sur les corbeilles
   const deleteIcons = modal.querySelectorAll('.fa-trash-can');
-
   deleteIcons.forEach((icon) => {
     icon.addEventListener('click', function(event) {
       event.preventDefault();
-      deleteImage(event)
+      deleteImage(event);
     });
-  })
-
-// Ajout d'une classe aux images de la modalGallery
-  const modalGalleryImages = modal.querySelectorAll('.modalGallery .modalImg');
-  modalGalleryImages.forEach((image) => {
-    image.classList.add('modalGalleryImage');
   });
 
+  // Vérifier si la modalGallery doit être affichée ou masquée
+  const modalGallery = modal.querySelector('.modalGallery');
+  if (modalGallery.style.display === 'none') {
+    return; // Ne pas charger les images si la galerie est masquée
+  }
+
   // Ajout de l'événement de clic sur le bouton modalBtn
-  const modalBtn = target.querySelector('.modalBtn');
-  modalBtn.addEventListener('click', modalBtn);
+  const modalBtn = modal.querySelector('.modalBtn');
+  if (modalBtn) {
+    modalBtn.addEventListener('click', openModal2);
+  }
+
+  // Réinitialiser la valeur de resetModal
+  resetModal = modal.innerHTML;
 };
+
+
 
 //*************************************************** suppression des travaux à l'interieur de la modale ************************/
 //ajout de la fonction de suppréssion des travaux
 const deleteImage = function (event) {
   event.preventDefault();
 
-  const itemId = event.currentTarget.getAttribute('data-item-id');
+  const itemId = event.target.getAttribute('data-item-id');
 
   // Afficher une boîte de dialogue de confirmation
- if (confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
+ if (confirm
+  ("Êtes-vous sûr de vouloir supprimer cette image ?")) {
+
   fetch(`http://localhost:5678/api/works/${itemId}`, {
       method: 'DELETE',
       headers: {
         'accept': '*/*',
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
-    }})
+    }
+  })
 
     .then (response => {
       console.log(response);
@@ -260,6 +290,9 @@ const deleteImage = function (event) {
         if (modalItem) {
           modalItem.closest('.image-container').remove();
         }
+
+         // Mettre à jour la valeur de resetModal
+         resetModal = modal.innerHTML;
     })
 
     .catch(error => console.log(error));
@@ -276,49 +309,44 @@ const deleteGallery = function (event) {
 
   // Confirmation
   if (confirm("Êtes-vous sûr de vouloir supprimer toute la galerie ?")) {
+    // Sélection de tous les items à supprimer et création d'une boucle pour tous les sélectionner, quel que soit le nombre de travaux récupérés
+    const galleryItems = document.querySelectorAll('.gallery .work-item');
+    const galleryItemIds = Array.from(galleryItems).map(item => item.getAttribute('data-item-id'));
 
-  // selection de tous les items à supprimer et creation d'une boucle pour tous les selectionner quelque soit le nombre de travaux recupérés
-    document.querySelectorAll('.gallery .work-item').forEach(item => {
-    const itemId = item.getAttribute('data-item-id');
+    galleryItems.forEach(item => item.remove());
 
-      fetch(`http://localhost:5678/api/works/${itemId}`, {
-        method: 'DELETE',
-        headers: {
-          'accept': '/',
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      })
+    // Supprimer les travaux de la modalGallery
+    const modalGalleryItems = document.querySelectorAll('#modalGallery .image-container');
+    modalGalleryItems.forEach(item => item.remove());
 
-        .then(response => {
-          console.log(response);
-
-          // Confirmation de la suppression de l'élément de la galerie
-          console.log(`Suppression de l'élément ${itemId} réussie !`);
-          
-          // Gérer l'affichage dynamique des galeries suite à la suppression
-          const galleryItem = document.querySelector(`.gallery [data-item-id="${itemId}"]`);
-
-          if (galleryItem) {
-            galleryItem.remove();
-          }
-
-          const modalItem = document.querySelector(`#modalGallery [data-item-id="${itemId}"]`);
-          if (modalItem) {
-            modalItem.closest('.image-container').remove();
+    Promise.all(
+      galleryItemIds.map(itemId => {
+        return fetch(`http://localhost:5678/api/works/${itemId}`, {
+          method: 'DELETE',
+          headers: {
+            'accept': '*/*',
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
         })
-
+        .then(response => {
+          console.log(response);
+        })
         .catch(error => console.log(error));
+      })
+    )
+    .then(() => {
+      // Confirmation de la suppression de la galerie
+      alert('Suppression de la galerie réussie !');
     })
-
-    // Confirmation de la suppression de la galerie
-    alert('Suppression de la galerie réussie !');
-  } 
-  
-  else {
-    // Gestion des erreurs lors de la suppression de la galerie
-    alert("Une erreur s'est produite lors de la suppression de la galerie.");
+    .catch(error => {
+      // Gestion des erreurs lors de la suppression de la galerie
+      alert("Une erreur s'est produite lors de la suppression de la galerie.");
+      console.log(error);
+    });
+    
+    // Mettre à jour la valeur de resetModal
+    resetModal = modal.innerHTML;
   }
 };
 
@@ -339,6 +367,9 @@ if (isImageDeleted) {
 // Ne pas fermer la modale si la suppression a été effectuée
   return;
 }
+
+ // Réinitialiser la modale
+ modal.innerHTML = resetModal;
 
 //masquer la boite modale
   modal.style.display = "none"
@@ -367,4 +398,58 @@ window.addEventListener('keydown', function (event) {
   }
 })
 
-//*********************************Ajout d'un image ***********************************************//
+//********************************* Modifier la modale et gerer l'ajout d'un image ***********************************************//
+//ajout d'une fonction pour modifier l'apparence de la modal au click sur le boutton
+function openModal2 () {
+
+//appel de la fonction pour reinitialiser l'apparence de la modale de base
+modal.innerHTML = resetModal;
+initialModal();
+  
+  //modifier le texte du titre
+  const modalTitle = modal.querySelector('.modalTitle');
+  modalTitle.textContent = 'Ajout photo';
+
+  // Masquer la galerie
+  const modalGallery = modal.querySelector('.modalGallery');
+  modalGallery.style.display = 'none';
+
+   // Vider la galerie dans la modal
+   modalGallery.innerHTML = '';
+
+  // Stocker les images de la galerie d'origine
+  const originalGalleryItems = modalGallery.querySelectorAll('.image-container');
+
+  //affichage de la fleche de retour
+  document.querySelector('.arrowLeftPosition').style.display = 'flex';
+
+  //ajout du click pour reinitialiser la modale
+  const arrowRtrn = modal.querySelector('.arrowLeftPosition');
+  arrowRtrn.addEventListener('click', function() {
+
+  // Restaurer les images de la galerie
+  const galleryContainer = modal.querySelector('.modalGallery .gallery');
+
+      if (galleryContainer) {
+      galleryContainer.innerHTML = '';
+        
+      originalGalleryItems.forEach(item => {
+      galleryContainer.append(item);
+      });
+      }
+    
+
+  modal.innerHTML = resetModal;
+  initialModal();
+
+  // Masquer la flèche de retour
+  document.querySelector('.arrowLeftPosition').style.display = 'none';
+
+  // Réaffecter les écouteurs d'événements
+  const modalBtn = modal.querySelector('.modalBtn');
+  modalBtn.addEventListener('click', openModal2);
+
+  const deleteAll = document.querySelector('.deleteWorkModal');
+  deleteAll.addEventListener('click', deleteGallery);
+  });
+}
