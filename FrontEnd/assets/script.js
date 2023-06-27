@@ -417,9 +417,17 @@ initialModal();
    // Vider la galerie dans la modal
    modalGallery.innerHTML = '';
 
+  // Masquer le bouton modalBtn
+   const modalBtn = modal.querySelector('.modalBtn');
+  if (modalBtn) {
+    modalBtn.style.display = 'none';
+  }
+  
    //creation du formulaire
 
-   //modification (ou suppression ?) du boutton ajout photo
+   //création du boutton valider
+   
+  
 
    //masquer la span "supprimer la gallerie"
    const deleteAll = document.querySelector('.deleteWorkModal');
@@ -453,9 +461,9 @@ initialModal();
   // Masquer la flèche de retour
   document.querySelector('.arrowLeftPosition').style.display = 'none';
 
-  // Réaffecter les écouteurs d'événements
-  const modalBtn = modal.querySelector('.modalBtn');
+  //réaffecter les écouteurs d'événements
   modalBtn.addEventListener('click', openModal2);
+  
 
   const deleteAll = document.querySelector('.deleteWorkModal');
   deleteAll.addEventListener('click', deleteGallery);

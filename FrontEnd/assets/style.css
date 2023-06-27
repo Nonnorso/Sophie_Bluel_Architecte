@@ -400,6 +400,9 @@ footer nav ul {
 	Width:216px;
 	Height:38px;
 	border: none;
+	justify-content: center;
+	align-items: center;
+	display: flex;
 }
 
 /*********** gestion de la boite modale *******/
