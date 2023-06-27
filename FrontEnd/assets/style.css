@@ -403,6 +403,7 @@ footer nav ul {
 	justify-content: center;
 	align-items: center;
 	display: flex;
+	cursor: pointer;
 }
 
 /*********** gestion de la boite modale *******/

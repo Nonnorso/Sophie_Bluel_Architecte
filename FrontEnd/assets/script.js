@@ -422,8 +422,37 @@ initialModal();
   if (modalBtn) {
     modalBtn.style.display = 'none';
   }
-  
+
    //creation du formulaire
+   const form = document.createElement('form');
+   form.addEventListener('submit', function(event) {
+     event.preventDefault();
+     // Gérer l'envoi du formulaire ici
+   });
+ 
+   const inputFile = document.createElement('input');
+   inputFile.type = 'file';
+   inputFile.accept = 'image/*';
+ 
+   const previewImage = document.createElement('img');
+   previewImage.id = 'preview';
+   previewImage.classList.add('preview');
+   previewImage.src = '#';
+   previewImage.alt = 'Prévisualisation de l\'image';
+ 
+   const submitButton = document.createElement('input');
+   submitButton.type = 'submit';
+   submitButton.value = 'Ajouter';
+ 
+   form.appendChild(inputFile);
+   form.appendChild(previewImage);
+   form.appendChild(document.createElement('br'));
+   form.appendChild(submitButton);
+ 
+   // Ajouter le formulaire à la modale
+   const modalContent = modal.querySelector('.modal-wrapper');
+   modalContent.appendChild(form);
+
 
    //création du boutton valider
    
