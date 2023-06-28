@@ -542,3 +542,73 @@ footer nav ul {
 	text-decoration: none;
 	cursor:pointer;
 }
+
+/************************************* Gestion d'affichage du formulaire d'ajout de photo ****************************************/
+.modalForm{
+	display:flex;
+	flex-direction: column;
+	padding-left:105px;
+	padding-right:105px;
+	justify-content:center;
+}
+
+.modalFormContainer{
+	display: flex;
+  	flex-direction: column;
+}
+
+.modalFormImage{
+	width: 420px;
+	height: 169px; 
+	border-radius: 3px;
+	background: #E8F1F6; 
+	margin-bottom:30px;
+	display:flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items: center;
+}
+
+.preview{
+
+}
+
+.modalFormTitle{
+	margin-bottom:30px;
+	border:none;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	width: 100%;
+}
+
+.modalFormLabel {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+  }
+
+.modalFormCategory{
+	margin-bottom:47px;
+	border:none;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	background: #FFFFFF;
+	width: 100%;
+}
+
+.modalFormButton.modalButton {
+	margin-bottom: 55px;
+  }
+
+.modalButtonContainer{
+	display: flex;
+  	flex-direction: column;
+}
+
+.modalFormButton{
+	padding-top:10px;
+	padding-bottom:10px;
+	margin-bottom:29px;
+}
+
+.modalFormField{
+	padding-bottom: 21px;
+}

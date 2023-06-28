@@ -423,41 +423,135 @@ initialModal();
     modalBtn.style.display = 'none';
   }
 
-   //creation du formulaire
-   const form = document.createElement('form');
-   form.addEventListener('submit', function(event) {
-     event.preventDefault();
-     // Gérer l'envoi du formulaire ici
-   });
- 
-   const inputFile = document.createElement('input');
-   inputFile.type = 'file';
-   inputFile.accept = 'image/*';
- 
-   const previewImage = document.createElement('img');
-   previewImage.id = 'preview';
-   previewImage.classList.add('preview');
-   previewImage.src = '#';
-   previewImage.alt = 'Prévisualisation de l\'image';
- 
-   const submitButton = document.createElement('input');
-   submitButton.type = 'submit';
-   submitButton.value = 'Ajouter';
- 
-   form.appendChild(inputFile);
-   form.appendChild(previewImage);
-   form.appendChild(document.createElement('br'));
-   form.appendChild(submitButton);
- 
-   // Ajouter le formulaire à la modale
-   const modalContent = modal.querySelector('.modal-wrapper');
-   modalContent.appendChild(form);
+  // Sélectionner la modalBar existante
+  const modalBar = document.querySelector('.modalBar');
 
+//****************************** partie du formulaire d'ajout photo ***************************************************************//
 
-   //création du boutton valider
-   
+  // Création du formulaire
+  const form = document.createElement('form');
+  form.classList.add('modalForm', 'modalFormContainer');
+
+  // Champ pour afficher l'image
+  const imageContainer = document.createElement('div');
+  imageContainer.classList.add('modalFormImage');
+
+  const imageIcon = document.createElement('img');
+  imageIcon.src = "/icons/picture-svgrepo-com%201image-icon.jpg";
+
+  const inputFile = document.createElement('input');
+  inputFile.type = 'file';
+  inputFile.accept = 'image/*';
+
+  const previewImage = document.createElement('img');
+  previewImage.id = 'preview';
+  previewImage.classList.add('preview');
+  previewImage.src = '#';
+  previewImage.alt = "Prévisualisation de l'image";
+  previewImage.style.display = 'none';
+
+  const addImageButton = document.createElement('button');
+  addImageButton.type = 'button';
+  addImageButton.textContent = "+ Ajouter photo";
+
+  const infoSpan = document.createElement('span');
+  infoSpan.textContent = "jpg, png : 4mo max";
+
+  imageContainer.append(imageIcon);
+  imageContainer.append(previewImage);
+  imageContainer.append(addImageButton);
+  imageContainer.append(infoSpan);
+
+  // Ajouter l'image avant le bouton
+  imageContainer.insertBefore(previewImage, addImageButton);
+
+  // Ajouter le champ pour afficher l'image au formulaire
+  form.append(imageContainer);
+
+  // Champ "titre"
+  const titleInput = document.createElement('input');
+  titleInput.type = 'text';
+  titleInput.classList.add('modalFormTitle');
+
+  // Ajouter l'étiquette pour le champ "titre"
+  const titleLabel = document.createElement('label');
+  titleLabel.textContent = 'Titre';
+  titleLabel.htmlfor = 'titleInput';
+  titleLabel.classList.add('modalFormLabel');
+
+  // Champ "catégorie"
+  const categorySelect = document.createElement('select');
+  categorySelect.classList.add('modalFormCategory');
+  const categories = ['', '', ''];
+
+  // Ajouter l'étiquette pour le champ "catégorie"
+  const categoryLabel = document.createElement('label');
+  categoryLabel.textContent = 'Catégorie';
+  categoryLabel.for = 'categorySelect';
+  categoryLabel.classList.add('modalFormLabel');
+
+  categories.forEach(category => {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category;
+    categorySelect.append(option);
+  });
+
+  // Créer le conteneur du bouton du formulaire
+  const buttonContainer = document.createElement('div');
+  buttonContainer.classList.add('modalButtonContainer');
+
+  // Bouton "valider"
+  const submitButton = document.createElement('input');
+  submitButton.type = 'submit';
+  submitButton.value = 'Valider';
+  submitButton.classList.add('modalFormContainer', 'modalFormButton', 'modalButton');
+
+  // Ajouter le bouton au conteneur du bouton
+  buttonContainer.append(submitButton);
+
+  // Ajouter le formulaire à la modale
+  const modalContent = modal.querySelector('.modal-wrapper');
+  modalContent.append(form);
+
+  // Ajouter le conteneur du bouton à la modalWrapper
+  modalContent.append(buttonContainer);
+
+  // Écouteur d'événement pour la soumission du formulaire
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+
+  // Ajouter les éléments au formulaire
+  // Champ pour afficher l'image
+  form.append(imageContainer);
+
+  // Étiquette et champ "titre"
+  const titleContainer = document.createElement('div');
+  titleContainer.classList.add('modalFormField');
+
+  titleContainer.append(titleLabel);
+  titleContainer.append(titleInput);
+
+  form.append(titleContainer);
+
+  // Étiquette et champ "catégorie"
+  const categoryContainer = document.createElement('div');
+  categoryContainer.classList.add('modalFormField');
+
+  categoryContainer.append(categoryLabel);
+  categoryContainer.append(categorySelect);
+
+  form.append(categoryContainer);
+
+  // Ajouter la modalBar avant le bouton de soumission
+  submitButton.parentNode.insertBefore(modalBar, submitButton.nextSibling);
+
+  // Bouton "valider"
+  buttonContainer.append(submitButton);
+
+ //************************************************* fin formulaire  *************************************************************//  
   
-
    //masquer la span "supprimer la gallerie"
    const deleteAll = document.querySelector('.deleteWorkModal');
    deleteAll.style.display = 'none';
@@ -483,7 +577,6 @@ initialModal();
       });
       }
     
-
   modal.innerHTML = resetModal;
   initialModal();
 
@@ -493,7 +586,6 @@ initialModal();
   //réaffecter les écouteurs d'événements
   modalBtn.addEventListener('click', openModal2);
   
-
   const deleteAll = document.querySelector('.deleteWorkModal');
   deleteAll.addEventListener('click', deleteGallery);
   });
