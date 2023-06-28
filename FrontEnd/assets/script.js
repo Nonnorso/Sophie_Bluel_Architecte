@@ -409,6 +409,7 @@ initialModal();
   //modifier le texte du titre
   const modalTitle = modal.querySelector('.modalTitle');
   modalTitle.textContent = 'Ajout photo';
+  modalTitle.classList.add('modalTitle2Style')
 
   // Masquer la galerie
   const modalGallery = modal.querySelector('.modalGallery');
@@ -437,7 +438,8 @@ initialModal();
   imageContainer.classList.add('modalFormImage');
 
   const imageIcon = document.createElement('img');
-  imageIcon.src = "/icons/picture-svgrepo-com%201image-icon.jpg";
+  imageIcon.src = "./assets/icons/picture-svgrepo-com%201image-icon.jpg";
+  imageIcon.classList.add('modalFormIcon')
 
   const inputFile = document.createElement('input');
   inputFile.type = 'file';
@@ -453,9 +455,11 @@ initialModal();
   const addImageButton = document.createElement('button');
   addImageButton.type = 'button';
   addImageButton.textContent = "+ Ajouter photo";
+  addImageButton.classList.add('addImageButtonStyle')
 
   const infoSpan = document.createElement('span');
   infoSpan.textContent = "jpg, png : 4mo max";
+  infoSpan.classList.add('infoSpanStyle');
 
   imageContainer.append(imageIcon);
   imageContainer.append(previewImage);

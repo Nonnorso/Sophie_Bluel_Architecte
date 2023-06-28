@@ -512,6 +512,7 @@ footer nav ul {
 }
 
 .modalBtn{
+	border:none;
 	background: #1D6154;
 	border-radius: 60px;
 	font-family: 'Syne';
@@ -543,6 +544,10 @@ footer nav ul {
 	cursor:pointer;
 }
 
+.modalTitle2Style{
+	padding-bottom:36px;
+}
+
 /************************************* Gestion d'affichage du formulaire d'ajout de photo ****************************************/
 .modalForm{
 	display:flex;
@@ -569,44 +574,75 @@ footer nav ul {
 	align-items: center;
 }
 
+.modalFormIcon{
+	padding-bottom:15px;
+}
+
+.addImageButtonStyle{
+	border:none;
+	cursor: pointer;
+	border-radius: 50px;
+	background: #CBD6DC; 
+	color: #306685;
+	text-align: center;
+	font-size: 14px;
+	font-family: Work Sans;
+	padding: 10px 33px;	
+	margin-bottom: 7px;
+}
+
+.infoSpanStyle{
+	font-size: 10px;
+	font-family: Work Sans;
+}
+
 .preview{
 
 }
 
 .modalFormTitle{
-	margin-bottom:30px;
 	border:none;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 	width: 100%;
+	height:51px;
+	color: #444;
+	font-size: 14px;
+	font-family: Work Sans
 }
 
 .modalFormLabel {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 10px;
+	font-size: 14px;
+	font-family: Work Sans;
+	font-weight: 500; 
   }
 
 .modalFormCategory{
-	margin-bottom:47px;
+	margin-bottom:26px;
 	border:none;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 	background: #FFFFFF;
 	width: 100%;
+	height:51px;
+	color: #444;
+	font-size: 14px;
+	font-family: Work Sans; 
 }
-
-.modalFormButton.modalButton {
-	margin-bottom: 55px;
-  }
 
 .modalButtonContainer{
 	display: flex;
   	flex-direction: column;
 }
 
-.modalFormButton{
+.modalFormButton.modalButton{
 	padding-top:10px;
 	padding-bottom:10px;
-	margin-bottom:29px;
+	margin-bottom:55px;
+	border:none;
+	cursor: pointer;
+	background: #A7A7A7; 
 }
 
 .modalFormField{
