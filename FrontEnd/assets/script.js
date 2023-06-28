@@ -72,7 +72,7 @@ await fetch('http://localhost:5678/api/categories')
 .catch(error => console.log(error))
 
 // Gestion des filtres
-document.querySelectorAll('button').forEach(button => {
+document.querySelectorAll('.btnFilter').forEach(button => {
   button.addEventListener('click', () => {
     const categoryId = button.getAttribute('data-cat-id')
     
@@ -594,3 +594,4 @@ initialModal();
   deleteAll.addEventListener('click', deleteGallery);
   });
 }
+
