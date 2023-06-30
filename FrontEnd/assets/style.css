@@ -596,10 +596,6 @@ footer nav ul {
 	font-family: Work Sans;
 }
 
-.preview{
-
-}
-
 .modalFormTitle{
 	border:none;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
@@ -607,7 +603,8 @@ footer nav ul {
 	height:51px;
 	color: #444;
 	font-size: 14px;
-	font-family: Work Sans
+	font-family: Work Sans;
+	margin-bottom:21px;
 }
 
 .modalFormLabel {
@@ -648,3 +645,7 @@ footer nav ul {
 .modalFormField{
 	padding-bottom: 21px;
 }
+
+.hidden {
+	display: none;
+  }

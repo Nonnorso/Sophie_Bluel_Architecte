@@ -429,130 +429,187 @@ initialModal();
 
 //****************************** partie du formulaire d'ajout photo ***************************************************************//
 
-  // Création du formulaire
-  const form = document.createElement('form');
-  form.classList.add('modalForm', 'modalFormContainer');
+// Création du formulaire
+const form = document.createElement('form');
+form.classList.add('modalForm', 'modalFormContainer');
 
-  // Champ pour afficher l'image
-  const imageContainer = document.createElement('div');
-  imageContainer.classList.add('modalFormImage');
+// Champ pour afficher l'image
+const imageContainer = document.createElement('div');
+imageContainer.classList.add('modalFormImage');
 
-  const imageIcon = document.createElement('img');
-  imageIcon.src = "./assets/icons/picture-svgrepo-com%201image-icon.jpg";
-  imageIcon.classList.add('modalFormIcon')
+const imageIcon = document.createElement('img');
+imageIcon.src = "./assets/icons/picture-svgrepo-com%201image-icon.jpg";
+imageIcon.classList.add('modalFormIcon');
 
-  const inputFile = document.createElement('input');
-  inputFile.type = 'file';
-  inputFile.accept = 'image/*';
+const inputFile = document.createElement('input');
+inputFile.type = 'file';
+inputFile.accept = 'image/*';
+inputFile.style.display = 'none';
+inputFile.name = 'image'; // Ajout de l'attribut "name"
 
-  const previewImage = document.createElement('img');
-  previewImage.id = 'preview';
-  previewImage.classList.add('preview');
-  previewImage.src = '#';
-  previewImage.alt = "Prévisualisation de l'image";
-  previewImage.style.display = 'none';
+const previewImage = document.createElement('img');
+previewImage.id = 'preview';
+previewImage.classList.add('preview');
+previewImage.src = '#';
+previewImage.alt = "Prévisualisation de l'image";
+previewImage.style.display = 'none';
 
-  const addImageButton = document.createElement('button');
-  addImageButton.type = 'button';
-  addImageButton.textContent = "+ Ajouter photo";
-  addImageButton.classList.add('addImageButtonStyle')
+const addImageButton = document.createElement('button');
+addImageButton.type = 'button';
+addImageButton.textContent = "+ Ajouter photo";
+addImageButton.classList.add('addImageButtonStyle');
 
-  const infoSpan = document.createElement('span');
-  infoSpan.textContent = "jpg, png : 4mo max";
-  infoSpan.classList.add('infoSpanStyle');
+const infoSpan = document.createElement('span');
+infoSpan.textContent = "jpg, png : 4mo max";
+infoSpan.classList.add('infoSpanStyle');
 
-  imageContainer.append(imageIcon);
-  imageContainer.append(previewImage);
-  imageContainer.append(addImageButton);
-  imageContainer.append(infoSpan);
+imageContainer.append(imageIcon);
+imageContainer.append(previewImage);
+imageContainer.append(inputFile);
+imageContainer.append(addImageButton);
+imageContainer.append(infoSpan);
 
-  // Ajouter l'image avant le bouton
-  imageContainer.insertBefore(previewImage, addImageButton);
+// Écouter l'événement "click" sur le bouton "addImageButtonStyle"
+addImageButton.addEventListener('click', function() {
+  inputFile.click(); // Simuler un clic sur l'input file
+});
 
-  // Ajouter le champ pour afficher l'image au formulaire
-  form.append(imageContainer);
+// Écouter l'événement "change" de l'input file
+inputFile.addEventListener('change', function() {
+  const file = inputFile.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      previewImage.src = e.target.result; // Afficher l'image prévisualisée
+      previewImage.style.display = 'block'; // Afficher l'image prévisualisée
+      imageIcon.classList.add('hidden'); // Masquer l'icône de l'image
+      addImageButton.classList.add('hidden'); // Masquer le bouton "Ajouter photo"
+      infoSpan.classList.add('hidden'); // Masquer l'infoSpan
+    };
+    reader.readAsDataURL(file);
+  } else {
+    previewImage.src = '#'; // Réinitialiser l'image prévisualisée
+    previewImage.style.display = 'none'; // Cacher l'image prévisualisée
+    imageIcon.classList.remove('hidden'); // Afficher l'icône de l'image
+    addImageButton.classList.remove('hidden'); // Afficher le bouton "Ajouter photo"
+    infoSpan.classList.remove('hidden'); // Afficher l'infoSpan
+  }
+});
 
-  // Champ "titre"
-  const titleInput = document.createElement('input');
-  titleInput.type = 'text';
-  titleInput.classList.add('modalFormTitle');
+// Ajouter l'image avant le bouton
+imageContainer.insertBefore(previewImage, addImageButton);
 
-  // Ajouter l'étiquette pour le champ "titre"
-  const titleLabel = document.createElement('label');
-  titleLabel.textContent = 'Titre';
-  titleLabel.htmlfor = 'titleInput';
-  titleLabel.classList.add('modalFormLabel');
+// Ajouter le champ pour afficher l'image au formulaire
+form.append(imageContainer);
 
-  // Champ "catégorie"
-  const categorySelect = document.createElement('select');
-  categorySelect.classList.add('modalFormCategory');
-  const categories = ['', '', ''];
+// Champ "titre"
+const titleInput = document.createElement('input');
+titleInput.type = 'text';
+titleInput.classList.add('modalFormTitle');
+titleInput.name = 'title'; // Ajout de l'attribut "name"
 
-  // Ajouter l'étiquette pour le champ "catégorie"
-  const categoryLabel = document.createElement('label');
-  categoryLabel.textContent = 'Catégorie';
-  categoryLabel.for = 'categorySelect';
-  categoryLabel.classList.add('modalFormLabel');
+// Ajouter l'étiquette pour le champ "titre"
+const titleLabel = document.createElement('label');
+titleLabel.textContent = 'Titre';
+titleLabel.htmlFor = 'titleInput';
+titleLabel.classList.add('modalFormLabel');
 
-  categories.forEach(category => {
-    const option = document.createElement('option');
-    option.value = category;
-    option.textContent = category;
-    categorySelect.append(option);
+// Champ "catégorie"
+const categorySelect = document.createElement('select');
+categorySelect.classList.add('modalFormCategory');
+categorySelect.name = 'category'; // Ajout de l'attribut "name"
+
+// Ajouter l'étiquette pour le champ "catégorie"
+const categoryLabel = document.createElement('label');
+categoryLabel.textContent = 'Catégorie';
+categoryLabel.htmlFor = 'categorySelect';
+categoryLabel.classList.add('modalFormLabel');
+
+// Ajouter les éléments "étiquette" et "champ" au formulaire
+form.append(titleLabel);
+form.append(titleInput);
+form.append(categoryLabel);
+form.append(categorySelect);
+
+// Récupérer les catégories de l'API
+fetch('http://localhost:5678/api/categories')
+  .then(response => response.json())
+  .then(data => {
+    // Gérer la réponse de l'API
+    data.forEach(category => {
+      const option = document.createElement('option');
+      option.value = category.id;
+      option.textContent = category.name;
+      categorySelect.append(option);
+    });
+  })
+  .catch(error => {
+    // Gérer les erreurs de la requête
+    console.error('Erreur lors de la récupération des catégories :', error);
   });
 
-  // Créer le conteneur du bouton du formulaire
-  const buttonContainer = document.createElement('div');
-  buttonContainer.classList.add('modalButtonContainer');
+// Bouton "Valider"
+const submitButton = document.createElement('input');
+submitButton.type = 'submit';
+submitButton.value = 'Valider';
+submitButton.classList.add('modalFormButton');
 
-  // Bouton "valider"
-  const submitButton = document.createElement('input');
-  submitButton.type = 'submit';
-  submitButton.value = 'Valider';
-  submitButton.classList.add('modalFormContainer', 'modalFormButton', 'modalButton');
+// Écouteur d'événement pour la soumission du formulaire
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
 
-  // Ajouter le bouton au conteneur du bouton
-  buttonContainer.append(submitButton);
+  // Récupérer les valeurs des champs du formulaire
+  const titleValue = titleInput.value;
+  const categoryValue = categorySelect.value;
+  const imageFile = inputFile.files[0];
 
-  // Ajouter le formulaire à la modale
-  const modalContent = modal.querySelector('.modal-wrapper');
-  modalContent.append(form);
+  // Créer un objet FormData pour envoyer les données multipart/form-data
+  const formData = new FormData();
+  formData.append('title', titleValue);
+  formData.append('category', categoryValue);
+  formData.append('image', imageFile);
 
-  // Ajouter le conteneur du bouton à la modalWrapper
-  modalContent.append(buttonContainer);
+  // Envoyer les données à votre API en tant que requête POST
+  fetch('http://localhost:5678/api/works', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Gérer la réponse de votre API ici
+      console.log('Réponse de l\'API :', data);
+      // Effectuer les actions nécessaires après l'envoi réussi du formulaire
 
-  // Écouteur d'événement pour la soumission du formulaire
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
-  });
+      // Réinitialiser les champs du formulaire
+      titleInput.value = '';
+      categorySelect.value = '';
+      inputFile.value = '';
+      previewImage.src = '#';
+      previewImage.style.display = 'none';
+      imageIcon.classList.remove('hidden');
+      addImageButton.classList.remove('hidden');
+      infoSpan.classList.remove('hidden');
+    })
+    .catch(error => {
+      // Gérer les erreurs de la requête ici
+      console.error('Erreur lors de l\'envoi des données :', error);
+    });
+});
 
-  // Ajouter les éléments au formulaire
-  // Champ pour afficher l'image
-  form.append(imageContainer);
+// Ajouter le bouton au formulaire
+form.append(submitButton);
 
-  // Étiquette et champ "titre"
-  const titleContainer = document.createElement('div');
-  titleContainer.classList.add('modalFormField');
+ // Insérer la modalBar après modalFormCategory et avant modalFormButton
+ const modalFormCategory = form.querySelector('.modalFormCategory');
+ const modalFormButton = form.querySelector('.modalFormButton');
+ modalFormCategory.parentNode.insertBefore(modalBar, modalFormButton);
 
-  titleContainer.append(titleLabel);
-  titleContainer.append(titleInput);
-
-  form.append(titleContainer);
-
-  // Étiquette et champ "catégorie"
-  const categoryContainer = document.createElement('div');
-  categoryContainer.classList.add('modalFormField');
-
-  categoryContainer.append(categoryLabel);
-  categoryContainer.append(categorySelect);
-
-  form.append(categoryContainer);
-
-  // Ajouter la modalBar avant le bouton de soumission
-  submitButton.parentNode.insertBefore(modalBar, submitButton.nextSibling);
-
-  // Bouton "valider"
-  buttonContainer.append(submitButton);
+// Ajouter le formulaire à la modale
+const modalContent = modal.querySelector('.modal-wrapper');
+modalContent.append(form);
 
  //************************************************* fin formulaire  *************************************************************//  
   
