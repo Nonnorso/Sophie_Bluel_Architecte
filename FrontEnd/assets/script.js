@@ -558,6 +558,11 @@ submitButton.classList.add('modalFormButton');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
 
+  if (!validateForm()) {
+    // La validation a échoué, ne pas envoyer le formulaire
+    return;
+  }
+
   // Récupérer les valeurs des champs du formulaire
   const titleValue = titleInput.value;
   const categoryValue = categorySelect.value;
@@ -592,11 +597,70 @@ form.addEventListener('submit', function(event) {
       imageIcon.classList.remove('hidden');
       addImageButton.classList.remove('hidden');
       infoSpan.classList.remove('hidden');
+      // Réinitialiser l'aspect du bouton "Valider"
+      submitButton.classList.remove('valid');
     })
     .catch(error => {
       // Gérer les erreurs de la requête ici
       console.error('Erreur lors de l\'envoi des données :', error);
     });
+});
+
+// Fonction de validation du formulaire
+function validateForm() {
+  const file = inputFile.files[0];
+  const allowedExtensions = /(\.jpg|\.png)$/i;
+  const maxSize = 4 * 1024 * 1024; // 4 Mo
+
+  if (!file) {
+    // Aucun fichier sélectionné
+    showError('Veuillez sélectionner un fichier ".jpg" ou ".png" de 4 Mo maximum');
+    submitButton.classList.remove('valid');
+    return false;
+  }
+
+  if (!allowedExtensions.test(file.name)) {
+    // Extension de fichier non autorisée 
+    showError('Les extensions de fichier autorisées sont .jpg et .png.');
+    submitButton.classList.remove('valid');
+    return false;
+  }
+
+  if (file.size > maxSize) {
+    // Fichier trop volumineux
+    showError('La taille du fichier ne doit pas dépasser 4 Mo.');
+    submitButton.classList.remove('valid');
+    return false;
+  }
+
+  const titleValue = titleInput.value.trim(); // Supprimer les espaces vides au début et à la fin
+
+  if (titleValue === '') {
+    showError('Veuillez ajouter un titre.');
+    submitButton.classList.remove('valid');
+    return false;
+  }
+
+  hideError();
+  submitButton.classList.add('valid');
+  return true;
+}
+
+// Fonction pour afficher le message d'erreur
+function showError(message) {
+  errorSpan.textContent = message;
+  errorSpan.style.display = 'flex';
+}
+
+// Fonction pour masquer le message d'erreur
+function hideError() {
+  errorSpan.textContent = '';
+  errorSpan.style.display = 'none';
+}
+
+// Écouteur d'événement "change" de l'input file pour la validation en temps réel
+inputFile.addEventListener('change', function() {
+  validateForm();
 });
 
 // Ajouter le bouton au formulaire
@@ -610,6 +674,13 @@ form.append(submitButton);
 // Ajouter le formulaire à la modale
 const modalContent = modal.querySelector('.modal-wrapper');
 modalContent.append(form);
+
+const errorSpan = document.createElement('span');
+errorSpan.classList.add('modalFormError');
+errorSpan.style.display = 'none';
+
+// Ajouter l'élément span après le bouton de soumission
+submitButton.parentNode.insertBefore(errorSpan, submitButton.nextSibling);
 
  //************************************************* fin formulaire  *************************************************************//  
   

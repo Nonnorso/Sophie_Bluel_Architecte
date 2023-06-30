@@ -506,9 +506,8 @@ footer nav ul {
 
 .modalBar{
 	border: 1px solid #B3B3B3;
-	margin-right: 105px;
-	margin-left: 105px;
-	margin-bottom: 38px;
+	width:420px;
+	margin: auto;
 }
 
 .modalBtn{
@@ -526,7 +525,10 @@ footer nav ul {
 	margin-left:195px;
 	margin-right:195px;
 	margin-bottom:23px;
+	margin-top:38px;
 	cursor: pointer;
+	width:237px;
+	height:36px;
 }
 
 .deleteWorkModal{
@@ -628,14 +630,21 @@ footer nav ul {
 	font-family: Work Sans; 
 }
 
+.preview{
+	max-width: 129px;
+	max-height: 169px;
+	width:auto;
+	height:auto;
+}
+
 .modalButtonContainer{
 	display: flex;
   	flex-direction: column;
 }
 
-.modalFormButton.modalButton{
-	padding-top:10px;
-	padding-bottom:10px;
+form .modalFormButton{
+	width:237px;
+	height:36px;
 	margin-bottom:55px;
 	border:none;
 	cursor: pointer;
@@ -648,4 +657,14 @@ footer nav ul {
 
 .hidden {
 	display: none;
+  }
+
+.modalFormError{
+	color:red;
+	margin-bottom:20px;
+	justify-content:center;
+}
+
+.modalFormButton.valid {
+	background: #1D6154;
   }
