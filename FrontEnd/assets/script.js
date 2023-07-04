@@ -198,6 +198,10 @@ const openModal = function (event) {
   resetModal = modal.cloneNode(true); 
 
   initialModal();
+
+    // Réaffecter l'écouteur d'événement pour la suppression de la galerie
+    const deleteAll = modal.querySelector('.deleteWorkModal');
+    deleteAll.addEventListener('click', deleteGallery);
 };
 
 function initialModal() {
@@ -407,6 +411,10 @@ if (isImageDeleted) {
   // Conserver le contenu de la modalGallery avant la réinitialisation
   const modalGallery = modal.querySelector('.modalGallery');
   const modalGalleryContent = modalGallery.innerHTML;
+
+  // Réaffecter les écouteurs d'événements pour les éléments de la modale
+  const deleteAll = modal.querySelector('.deleteWorkModal');
+  deleteAll.addEventListener('click', deleteGallery);
 
   // Réinitialiser la modale en conservant le contenu de la modalGallery
   modal.innerHTML = resetModal;
