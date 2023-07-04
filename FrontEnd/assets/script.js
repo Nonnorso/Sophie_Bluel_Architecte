@@ -400,27 +400,31 @@ const closeModal = function (event) {
   if (modal === null) return;
   event.preventDefault();
 
-//verification si une suppréssion a été effectuée
-const isImageDeleted = event.target.classList.contains('fa-trash-can');
-if (isImageDeleted) {
+  const isImageDeleted = event.target.classList.contains('fa-trash-can');
+  if (isImageDeleted) {
+    return;
+  }
 
-// Ne pas fermer la modale si la suppression a été effectuée
-  return;
-}
-
-  // Conserver le contenu de la modalGallery avant la réinitialisation
   const modalGallery = modal.querySelector('.modalGallery');
-  const modalGalleryContent = modalGallery.innerHTML;
+  const modalGalleryContent = modalGallery ? modalGallery.innerHTML : '';
 
-  // Réaffecter les écouteurs d'événements pour les éléments de la modale
   const deleteAll = modal.querySelector('.deleteWorkModal');
-  deleteAll.addEventListener('click', deleteGallery);
+  if(deleteAll) {
+    deleteAll.addEventListener('click', deleteGallery);
+  }
 
-  // Réinitialiser la modale en conservant le contenu de la modalGallery
   modal.innerHTML = resetModal;
-  modal.querySelector('.modalGallery').innerHTML = modalGalleryContent;
 
-//masquer la boite modale
+  const newModalGallery = modal.querySelector('.modalGallery');
+  if (newModalGallery && modalGalleryContent) {
+    newModalGallery.innerHTML = modalGalleryContent;
+  }
+
+  const modalBtn = modal.querySelector('.modalBtn');
+  if (modalBtn) {
+    modalBtn.addEventListener('click', openModal2);
+  }
+
   modal.style.display = "none"
   modal.setAttribute('aria-hidden', 'true')
   modal.removeAttribute('aria-modal')
@@ -430,17 +434,14 @@ if (isImageDeleted) {
   modal = null
 }
 
-//empecher la fermeture de modale au clik dans la boite modale
 const stopPropagation = function (event){
   event.stopPropagation()
 }
 
-//ouverture de la boite modale sur le click des liens
 document.querySelectorAll('.jsModal').forEach(a =>{
   a.addEventListener('click', openModal)
 })
 
-//option de fermeture de la modale en appuyant sur "esc" ou "echap" selon le modele
 window.addEventListener('keydown', function (event) {
   if(event.key === "Escape" || event.key === "Esc"){
     closeModal(event)
@@ -452,7 +453,6 @@ window.addEventListener('keydown', function (event) {
 function openModal2 () {
 
 //appel de la fonction pour reinitialiser l'apparence de la modale de base
-modal.innerHTML = resetModal;
 initialModal();
   
   //modifier le texte du titre
@@ -669,7 +669,20 @@ form.addEventListener('submit', function(event) {
         data.id
       )
     );
-    })
+
+    // Réaffecter les écouteurs d'événements pour la suppression des images
+    const deleteIcons = modal.querySelectorAll('.fa-trash-can');
+    deleteIcons.forEach((icon) => {
+      icon.addEventListener('click', function(event) {
+        event.preventDefault();
+        deleteImage(event);
+      });
+    });
+
+    const deleteAll = modal.querySelector('.deleteWorkModal');
+    deleteAll.addEventListener('click', deleteGallery);
+  })
+    
     .catch(error => {
       // Gérer les erreurs de la requête ici
       console.error('Erreur lors de l\'envoi des données :', error);
@@ -801,8 +814,6 @@ submitButton.parentNode.insertBefore(errorSpan, submitButton.nextSibling);
   //réaffecter les écouteurs d'événements
   modalBtn.addEventListener('click', openModal2);
   
-  const deleteAll = document.querySelector('.deleteWorkModal');
-  deleteAll.addEventListener('click', deleteGallery);
   });
 }
 
