@@ -201,8 +201,7 @@ const openModal = function (event) {
 };
 
 function initialModal() {
-
-  if(!modal){
+  if (!modal) {
     console.error("L'élément modal n'a pas été trouvé.");
     return;
   }
@@ -237,8 +236,8 @@ function initialModal() {
 
   // Vérifier si la modalGallery doit être affichée ou masquée
   const modalGallery = modal.querySelector('.modalGallery');
-  if (modalGallery.style.display === 'none') {
-    return; // Ne pas charger les images si la galerie est masquée
+  if (modalGallery.style.display === 'none' && modalGallery.innerHTML !== '') {
+    return; // Ne pas charger les images si la galerie est masquée et qu'elle contient déjà du contenu
   }
 
   // Ajout de l'événement de clic sur le bouton modalBtn
@@ -249,9 +248,46 @@ function initialModal() {
 
   // Réinitialiser la valeur de resetModal
   resetModal = modal.innerHTML;
-};
 
+  // Charger les travaux à partir de l'API seulement si la galerie est vide
+  if (modalGallery.innerHTML === '') {
+    loadWorks();
+  }
+}
 
+function loadWorks() {
+  fetch('http://localhost:5678/api/works')
+    .then(response => response.json())
+    .then(works => {
+      // Supprimer les travaux existants de la modal
+      const galleryContainer = modal.querySelector('.modalImg');
+      while (galleryContainer.firstChild) {
+        galleryContainer.removeChild(galleryContainer.firstChild);
+      }
+
+      // Ajouter les nouveaux travaux à la modal
+      works.forEach(work => {
+        let categoryId = '';
+        if (work.category) {
+          categoryId = work.category.id;
+        }
+        galleryContainer.append(
+          createWorks(
+            categoryId,
+            work.imageUrl,
+            work.title,
+            work.id
+          )
+        );
+      });
+
+      // Mettre à jour resetModal avec le nouveau contenu
+      resetModal = modal.innerHTML;
+    })
+    .catch(error => {
+      console.error('Erreur lors de la récupération des travaux :', error);
+    });
+}
 
 //*************************************************** suppression des travaux à l'interieur de la modale ************************/
 //ajout de la fonction de suppréssion des travaux
@@ -368,8 +404,13 @@ if (isImageDeleted) {
   return;
 }
 
- // Réinitialiser la modale
- modal.innerHTML = resetModal;
+  // Conserver le contenu de la modalGallery avant la réinitialisation
+  const modalGallery = modal.querySelector('.modalGallery');
+  const modalGalleryContent = modalGallery.innerHTML;
+
+  // Réinitialiser la modale en conservant le contenu de la modalGallery
+  modal.innerHTML = resetModal;
+  modal.querySelector('.modalGallery').innerHTML = modalGalleryContent;
 
 //masquer la boite modale
   modal.style.display = "none"
@@ -585,8 +626,7 @@ form.addEventListener('submit', function(event) {
     .then(response => response.json())
     .then(data => {
       // Gérer la réponse de votre API ici
-      console.log('Réponse de l\'API :', data);
-      // Effectuer les actions nécessaires après l'envoi réussi du formulaire
+      console.log('Réponse de l\'API :', data);     
 
       // Réinitialiser les champs du formulaire
       titleInput.value = '';
@@ -598,7 +638,29 @@ form.addEventListener('submit', function(event) {
       addImageButton.classList.remove('hidden');
       infoSpan.classList.remove('hidden');
       // Réinitialiser l'aspect du bouton "Valider"
-      submitButton.classList.remove('valid');
+      submitButton.classList.remove('valid'); 
+
+        // Afficher le message d'alerte
+        alert('Image ajoutée avec succès !');
+        // Réinitialiser le contenu de la modale à son état d'origine
+        modal.innerHTML = resetModal;
+        // Revenir à la modale initiale
+        initialModal();
+            
+       // Mettre à jour la galerie en ajoutant le nouveau travail créé
+       const galleryContainer = document.querySelector('.gallery');
+    let categoryId = '';
+    if (data.category) {
+      categoryId = data.category.id;
+    }
+    galleryContainer.append(
+      createWorks(
+        categoryId,
+        data.imageUrl,
+        data.title,
+        data.id
+      )
+    );
     })
     .catch(error => {
       // Gérer les erreurs de la requête ici
@@ -611,40 +673,53 @@ function validateForm() {
   const file = inputFile.files[0];
   const allowedExtensions = /(\.jpg|\.png)$/i;
   const maxSize = 4 * 1024 * 1024; // 4 Mo
-
-  if (!file) {
-    // Aucun fichier sélectionné
-    showError('Veuillez sélectionner un fichier ".jpg" ou ".png" de 4 Mo maximum');
-    submitButton.classList.remove('valid');
-    return false;
-  }
-
-  if (!allowedExtensions.test(file.name)) {
-    // Extension de fichier non autorisée 
-    showError('Les extensions de fichier autorisées sont .jpg et .png.');
-    submitButton.classList.remove('valid');
-    return false;
-  }
-
-  if (file.size > maxSize) {
-    // Fichier trop volumineux
-    showError('La taille du fichier ne doit pas dépasser 4 Mo.');
-    submitButton.classList.remove('valid');
-    return false;
-  }
-
   const titleValue = titleInput.value.trim(); // Supprimer les espaces vides au début et à la fin
 
-  if (titleValue === '') {
-    showError('Veuillez ajouter un titre.');
-    submitButton.classList.remove('valid');
+  if (!file || !allowedExtensions.test(file.name) || file.size > maxSize || titleValue === '') {
+    // Afficher l'erreur appropriée en fonction de la condition non remplie
+    if (!file) {
+      showError('Veuillez sélectionner un fichier ".jpg" ou ".png" de 4 Mo maximum');
+    } else if (!allowedExtensions.test(file.name)) {
+      showError('Les extensions de fichier autorisées sont .jpg et .png.');
+    } else if (file.size > maxSize) {
+      showError('La taille du fichier ne doit pas dépasser 4 Mo.');
+    } else if (titleValue === '') {
+      showError('Veuillez ajouter un titre.');
+    }
+    
+    submitButton.classList.remove('valid'); // Supprimer la classe "valid" si la condition n'est pas remplie
     return false;
   }
 
   hideError();
-  submitButton.classList.add('valid');
+  submitButton.classList.add('valid'); // Ajouter la classe "valid" si toutes les conditions sont remplies
   return true;
 }
+
+// Fonction pour vérifier l'état du formulaire
+function checkFormValidity() {
+  const file = inputFile.files[0];
+  const allowedExtensions = /(\.jpg|\.png)$/i;
+  const maxSize = 4 * 1024 * 1024; // 4 Mo
+  const titleValue = titleInput.value.trim(); // Supprimer les espaces vides au début et à la fin
+
+  // Vérifier les conditions du formulaire
+  const isFileValid = !!file && allowedExtensions.test(file.name) && file.size <= maxSize;
+  const isTitleValid = titleValue !== '';
+
+  // Ajouter ou supprimer la classe "valid" en fonction de l'état du formulaire
+  if (isFileValid && isTitleValid) {
+    submitButton.classList.add('valid');
+  } else {
+    submitButton.classList.remove('valid');
+  }
+}
+
+// Écouteur d'événement pour l'input de fichier
+inputFile.addEventListener('change', checkFormValidity);
+
+// Écouteur d'événement pour l'input de titre
+titleInput.addEventListener('input', checkFormValidity);
 
 // Fonction pour afficher le message d'erreur
 function showError(message) {
