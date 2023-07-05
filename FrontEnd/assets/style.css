@@ -359,6 +359,8 @@ footer nav ul {
 }
 
 .errorMsg{
+	margin-left:70px;
+	margin-bottom:10px;
 	color:red;
 	padding-top:10px;
 	padding-bottom:10px;

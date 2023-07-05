@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   h1Elements.forEach((element) => {
 
     element.addEventListener('click', () => {
-      window.location.href = 'index.html'; // Remplacez 'accueil.html' par le lien de votre page d'accueil
+      window.location.href = 'index.html'; 
     });
   });
 });
@@ -733,6 +733,14 @@ function checkFormValidity() {
     submitButton.classList.add('valid');
   } else {
     submitButton.classList.remove('valid');
+  }
+
+   // Si le champ titre est valide, cacher le message d'erreur
+   if (isTitleValid) {
+    hideError();
+  }
+  else {
+    showError('Veuillez ajouter un titre.');
   }
 }
 
