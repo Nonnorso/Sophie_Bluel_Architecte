@@ -26,6 +26,12 @@ if(userId !== null && token !== null) {
 
 }
 
+//ajout de la base de donnée en ligne render
+const baseURL = window.location.hostname.includes('localhost')
+  ? 'http://localhost:5678'
+  : 'https://sophie-bluel-api.onrender.com'; 
+
+
 // Récuperation des travaux de l'API
 await fetch('/api/works')
 .then(response => response.json())
