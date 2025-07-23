@@ -260,7 +260,7 @@ function initialModal() {
 }
 
 function loadWorks() {
-  fetch('http://localhost:5678/api/works')
+  fetch('/api/works')
     .then(response => response.json())
     .then(works => {
       // Supprimer les travaux existants de la modal
@@ -304,7 +304,7 @@ const deleteImage = function (event) {
  if (confirm
   ("Êtes-vous sûr de vouloir supprimer cette image ?")) {
 
-  fetch(`http://localhost:5678/api/works/${itemId}`, {
+  fetch(`/api/works/${itemId}`, {
       method: 'DELETE',
       headers: {
         'accept': '*/*',
@@ -361,7 +361,7 @@ const deleteGallery = function (event) {
 
     Promise.all(
       galleryItemIds.map(itemId => {
-        return fetch(`http://localhost:5678/api/works/${itemId}`, {
+        return fetch(`/api/works/${itemId}`, {
           method: 'DELETE',
           headers: {
             'accept': '*/*',
@@ -581,7 +581,7 @@ form.append(categoryLabel);
 form.append(categorySelect);
 
 // Récupérer les catégories de l'API
-fetch('http://localhost:5678/api/categories')
+fetch('/api/categories')
   .then(response => response.json())
   .then(data => {
     // Gérer la réponse de l'API
@@ -624,7 +624,7 @@ form.addEventListener('submit', function(event) {
   formData.append('image', imageFile);
 
   // Envoyer les données à votre API en tant que requête POST
-  fetch('http://localhost:5678/api/works', {
+  fetch('/api/works', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
