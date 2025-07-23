@@ -22,7 +22,7 @@ app.use(
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Serve frontend statiques (frontend/)
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../Frontend')));
 
 // Routes API
 const db = require('./models');
@@ -39,7 +39,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Rediriger toutes les autres routes vers index.html (SPA)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  res.sendFile(path.join(__dirname, '../Frontend/index.html'));
 });
 
 module.exports = app;
