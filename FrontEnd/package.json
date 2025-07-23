@@ -1,0 +1,12 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "lite-server",
+    "build": "echo 'Nothing to build'"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
