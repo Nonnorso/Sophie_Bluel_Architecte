@@ -13,16 +13,22 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Sécurité avec Helmet (autorise images locales + base64)
+// Sécurité avec Helmet + Content Security Policy adaptée
 app.use(
   helmet({
     crossOriginResourcePolicy: false,
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        imgSrc: ["'self'", 'data:'], // permet images locales et en base64
-        scriptSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'", 'https://cdnjs.cloudflare.com'],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'https://fonts.googleapis.com',
+          'https://cdnjs.cloudflare.com'
+        ],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'https://*'],
         connectSrc: ["'self'"],
         objectSrc: ["'none'"],
         upgradeInsecureRequests: [],
