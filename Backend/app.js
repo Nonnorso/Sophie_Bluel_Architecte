@@ -12,26 +12,34 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(helmet({ crossOriginResourcePolicy: false }));
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
+
+// Images statiques (backend/images)
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-const db = require("./models");
+// Serve frontend statiques (frontend/)
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Routes API
+const db = require('./models');
 const userRoutes = require('./routes/user.routes');
 const categoriesRoutes = require('./routes/categories.routes');
 const worksRoutes = require('./routes/works.routes');
 
-db.sequelize.sync().then(() => console.log('db is ready'));
+db.sequelize.sync().then(() => console.log('DB is ready'));
 
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/works', worksRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// --- Ajout pour servir le frontend build ---
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
+// Rediriger toutes les autres routes vers index.html (SPA)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 module.exports = app;
