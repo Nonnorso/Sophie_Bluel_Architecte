@@ -21,7 +21,7 @@ document.querySelector('#form').addEventListener("submit", (event) => {
     if (form.email.value !== "" && form.password.value !== "") {
         errorMsg.textContent = "";
 
-        fetch('http://localhost:5678/api/users/login', {
+        fetch('/api/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
