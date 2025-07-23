@@ -33,7 +33,7 @@ const baseURL = window.location.hostname.includes('localhost')
 
 
 // Récuperation des travaux de l'API
-await fetch('/api/works')
+await fetch(`${baseURL}/api/works`)
 .then(response => response.json())
 .then(data => {
 
@@ -43,7 +43,7 @@ await fetch('/api/works')
     galleryContainer.append(
       createWorks(
         item.category.id,
-        item.imageUrl,
+        `${baseURL}/images/${item.imageUrl}`,
         item.title,
         item.id
     ))
@@ -54,7 +54,7 @@ await fetch('/api/works')
 .catch(error => console.log(error))
 
 // Récupération des catégories de l'API
-await fetch('/api/categories')
+await fetch(`${baseURL}/api/categories`)
 .then(response => response.json())
 .then(data => {
 
@@ -266,7 +266,7 @@ function initialModal() {
 }
 
 function loadWorks() {
-  fetch('/api/works')
+  fetch(`${baseURL}/api/works`)
     .then(response => response.json())
     .then(works => {
       // Supprimer les travaux existants de la modal
@@ -284,7 +284,7 @@ function loadWorks() {
         galleryContainer.append(
           createWorks(
             categoryId,
-            work.imageUrl,
+            `${baseURL}/images/${work.imageUrl}`,
             work.title,
             work.id
           )
