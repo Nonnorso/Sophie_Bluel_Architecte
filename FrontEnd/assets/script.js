@@ -27,7 +27,7 @@ if(userId !== null && token !== null) {
 }
 
 // Récuperation des travaux de l'API
-await fetch('http://localhost:5678/api/works')
+await fetch(fetch('/api/works'))
 .then(response => response.json())
 .then(data => {
 
@@ -48,7 +48,7 @@ await fetch('http://localhost:5678/api/works')
 .catch(error => console.log(error))
 
 // Récupération des catégories de l'API
-await fetch('http://localhost:5678/api/categories')
+await fetch('/api/categories')
 .then(response => response.json())
 .then(data => {
 
