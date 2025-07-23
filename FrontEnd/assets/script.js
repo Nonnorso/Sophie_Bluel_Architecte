@@ -27,7 +27,7 @@ if(userId !== null && token !== null) {
 }
 
 // Récuperation des travaux de l'API
-await fetch(fetch('/api/works'))
+await fetch('/api/works')
 .then(response => response.json())
 .then(data => {
 
