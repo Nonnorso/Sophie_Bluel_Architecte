@@ -13,25 +13,28 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Sécurité avec Helmet (autorise images locales + base64)
 app.use(
   helmet({
+    crossOriginResourcePolicy: false,
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        imgSrc: ["'self'", 'data:'],
+        imgSrc: ["'self'", 'data:'], // permet images locales et en base64
         scriptSrc: ["'self'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
-        // Ajoute d'autres directives si besoin
+        connectSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: [],
       },
     },
-    crossOriginResourcePolicy: false,
   })
 );
 
-// Images statiques (backend/images)
+// Dossier images backend
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-// Serve frontend statiques (frontend/)
+// Dossier frontend statique
 app.use(express.static(path.join(__dirname, '../FrontEnd')));
 
 // Routes API
@@ -47,7 +50,7 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/works', worksRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// Rediriger toutes les autres routes vers index.html (SPA)
+// Rediriger toutes les routes inconnues vers index.html (SPA)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../FrontEnd/index.html'));
 });
