@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Sécurité avec Helmet + Content Security Policy adaptée
+// Helmet avec CSP adaptée aux fonts, icônes et images distantes
 app.use(
   helmet({
     crossOriginResourcePolicy: false,
@@ -27,8 +27,13 @@ app.use(
           'https://fonts.googleapis.com',
           'https://cdnjs.cloudflare.com'
         ],
+        styleSrcElem: [
+          "'self'",
+          'https://fonts.googleapis.com',
+          'https://cdnjs.cloudflare.com'
+        ],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-        imgSrc: ["'self'", 'data:', 'https://*'],
+        imgSrc: ["'self'", 'data:', 'https:', 'blob:'],
         connectSrc: ["'self'"],
         objectSrc: ["'none'"],
         upgradeInsecureRequests: [],
@@ -56,7 +61,7 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/works', worksRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// Rediriger toutes les routes inconnues vers index.html (SPA)
+// Redirection vers index.html pour les routes frontend (SPA)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../FrontEnd/index.html'));
 });
